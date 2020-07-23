@@ -31,7 +31,9 @@ def infer(debug=False):
         detector = mask[YMIN:YMAX, XMIN:XMAX]
         area = (YMAX-YMIN)*(XMAX-XMIN)
         collision = np.sum(detector)
-        print(collision, area, collision/area)
+        confidence = collision/area
+        if confidence > 0.2:
+            print('Stop, idiots!')
         # Visualize
         if debug:
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
