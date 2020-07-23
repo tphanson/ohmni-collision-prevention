@@ -9,7 +9,7 @@ import time
 class ROSImage:
     def __init__(self):
         self.in_topic = '/main_cam/image_raw/compressed'
-        self.out_topic = '/ofm/draw_image/compressed'
+        self.out_topic = '/ocp/draw_image/compressed'
         self.in_data_type = 'sensor_msgs/CompressedImage'
         self.out_data_type = 'sensor_msgs/CompressedImage'
         self.header = None
@@ -37,7 +37,7 @@ class ROSImage:
         self.seq += 1
         return {
             'stamp': {'secs': int(_time), 'nsecs': int(_time % 1*10**9)},
-            'frame_id': 'ofm',
+            'frame_id': 'ocp',
             'seq': self.seq
         }
 
