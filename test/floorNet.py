@@ -17,6 +17,7 @@ def infer():
         print("======================================")
         # Infer
         ret, frame = camera.read()
+        print("Debug", ret)
         img, mask = floorNet.predict(frame)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
