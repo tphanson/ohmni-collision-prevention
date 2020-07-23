@@ -21,6 +21,7 @@ def infer():
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
         cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
+        cv.line(img, (80, 90), (144, 90), (0, 0, 255), 10)
         rosimg.apush(img*255)
 
         # Calculate frames per second (FPS)
