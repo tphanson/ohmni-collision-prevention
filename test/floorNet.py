@@ -25,7 +25,7 @@ def infer():
         cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 15)
         cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
 
-        rosimg.apush(img*255)
+        rosimg.apush(collision)
 
         # Calculate frames per second (FPS)
         end = time.time()
