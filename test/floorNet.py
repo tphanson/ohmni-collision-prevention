@@ -20,7 +20,7 @@ def infer():
         _, frame = camera.read()
         _, mask = floorNet.predict(frame)
         # Visualize
-        mask[90:110, 80:144] = mask[90:110, 80:144] + 0.5
+        mask[90:110, 85:139] = mask[90:110, 85:139] + 0.5
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
         # collision = np.zeros(mask.shape, dtype=np.float32)
         # cv.line(collision, (90, 100), (134, 100), (0, 0, 255), 20)
