@@ -16,13 +16,12 @@ def infer():
         start = time.time()
         print("======================================")
         # Infer
-        ret, frame = camera.read()
-        print("Debug", ret)
+        _, frame = camera.read()
         img, mask = floorNet.predict(frame)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
         cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
-        rosimg.apush(frame)
+        rosimg.apush(mask)
 
         # Calculate frames per second (FPS)
         end = time.time()
