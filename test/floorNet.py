@@ -19,14 +19,17 @@ def infer():
         # Infer
         _, frame = camera.read()
         _, mask = floorNet.predict(frame)
+        # Detect collision
+        detector = mask[90:110, 85:139]
+        area = (139-85)*(110-90)
+        collision = np.sum(detector)
+        print(collision, area, collision/area)
         # Visualize
-        mask[90:110, 85:139] = mask[90:110, 85:139] + 0.5
-        mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
+        # mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
         # collision = np.zeros(mask.shape, dtype=np.float32)
         # cv.line(collision, (90, 100), (134, 100), (0, 0, 255), 20)
         # cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
-
-        rosimg.apush(mask)
+        # rosimg.apush(mask)
 
         # Calculate frames per second (FPS)
         end = time.time()
