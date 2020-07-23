@@ -10,7 +10,7 @@ def infer():
     floorNet = FloorNet()
     rosimg = ros.ROSImage()
     rosimg.client.run()
-    camera = cv.VideoCapture(0)
+    camera = cv.VideoCapture(1)
     # Prediction
     while True:
         start = time.time()
