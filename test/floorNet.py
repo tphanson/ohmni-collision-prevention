@@ -27,10 +27,11 @@ def infer(debug=False):
         print(collision, area, collision/area)
         # Visualize
         if debug:
+            mask[70:110, 90:134] = mask[70:110, 90:134] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
-            collision = np.zeros(mask.shape, dtype=np.float32)
-            cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 40)
-            cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
+            # collision = np.zeros(mask.shape, dtype=np.float32)
+            # cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 40)
+            # cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
             img = img * 255
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
             rosimg.apush(mask)
