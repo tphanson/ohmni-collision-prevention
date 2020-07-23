@@ -29,7 +29,7 @@ def infer(debug=False):
         if debug:
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
             collision = np.zeros(mask.shape, dtype=np.float32)
-            cv.line(collision, (90, 110), (134, 110), (0, 0, 255), 40)
+            cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 40)
             cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
             img = img * 255
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
