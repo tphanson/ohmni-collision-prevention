@@ -5,6 +5,13 @@ import numpy as np
 from utils import ros
 from src.floorNet import FloorNet
 
+BOX = (40, 40)
+CENTROID = (112, 112)
+(XMIN, XMAX, YMIN, YMAX) = (
+    int(CENTROID[0] - BOX[0]/2), int(CENTROID[0]+BOX[0]/2),
+    int(CENTROID[1] - BOX[1]), int(CENTROID[1])
+)
+
 
 def infer(debug=False):
     # Init modules
@@ -21,20 +28,16 @@ def infer(debug=False):
         _, frame = camera.read()
         img, mask = floorNet.predict(frame)
         # Detect collision
-        detector = mask[70:110, 90:134]
-        area = (110-70)*(134-90)
+        detector = mask[YMIN:YMAX, XMIN:XMAX]
+        area = (YMAX-YMIN)*(XMAX-XMIN)
         collision = np.sum(detector)
         print(collision, area, collision/area)
         # Visualize
         if debug:
-            mask[70:110, 90:134] = mask[70:110, 90:134] + 0.5
-            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
-            # collision = np.zeros(mask.shape, dtype=np.float32)
-            # cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 40)
-            # cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
-            img = img * 255
+            mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
+            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
-            rosimg.apush(mask)
+            rosimg.apush(mask * 255)
 
         # Calculate frames per second (FPS)
         end = time.time()
