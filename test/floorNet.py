@@ -19,13 +19,11 @@ def infer():
         # Infer
         _, frame = camera.read()
         img, mask = floorNet.predict(frame)
-        print(img)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-        collision = np.zeros(mask.shape)/255
+        collision = np.zeros(mask.shape, dtype=np.uint8)
         cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 15)
         cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
-        cv.addWeighted(collision, 0.5, img, 0.5, 0, img)
 
         rosimg.apush(img*255)
 
