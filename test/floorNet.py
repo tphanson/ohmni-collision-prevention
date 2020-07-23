@@ -20,7 +20,7 @@ def infer():
         img, mask = floorNet.predict(frame)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-        cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
+        # cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
         rosimg.apush(img)
 
         # Calculate frames per second (FPS)
