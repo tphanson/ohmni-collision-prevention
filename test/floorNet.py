@@ -22,7 +22,7 @@ def infer():
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
         collision = np.zeros(mask.shape, dtype=np.float32)
-        cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 15)
+        cv.line(collision, (90, 80), (134, 80), (0, 0, 255), 20)
         cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
 
         rosimg.apush(mask)
