@@ -6,11 +6,12 @@ from utils import ros
 from src.floorNet import FloorNet
 
 
-def infer():
+def infer(debug=False):
     # Init modules
     floorNet = FloorNet()
-    rosimg = ros.ROSImage()
-    rosimg.client.run()
+    if debug:
+        rosimg = ros.ROSImage()
+        rosimg.client.run()
     camera = cv.VideoCapture(1)
     # Prediction
     while True:
@@ -25,11 +26,14 @@ def infer():
         collision = np.sum(detector)
         print(collision, area, collision/area)
         # Visualize
-        # mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
-        # collision = np.zeros(mask.shape, dtype=np.float32)
-        # cv.line(collision, (90, 100), (134, 100), (0, 0, 255), 20)
-        # cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
-        # rosimg.apush(mask)
+        if debug:
+            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
+            collision = np.zeros(mask.shape, dtype=np.float32)
+            cv.line(collision, (85, 100), (139, 100), (0, 0, 255), 20)
+            cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
+            img = img * 255
+            cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
+            rosimg.apush(mask)
 
         # Calculate frames per second (FPS)
         end = time.time()
