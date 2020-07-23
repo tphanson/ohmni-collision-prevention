@@ -1,51 +1,51 @@
-import cv2 as cv
-import threading
-import time
-from queue import Queue
+from PIL import Image
+from enum import Enum
+from struct import *
 
 
-class Camera:
-    def __init__(self):
-        self.queue = Queue(2)
-        self.stop = threading.Event()
-        self.stream_thread = threading.Thread(
-            target=self.stream, args=(self.stop, self.queue, cv.VideoCapture(0),))
-        self.play_thread = threading.Thread(
-            target=self.play, args=(self.stop, self.queue, 1/24,))
+class SockState(Enum):
+    SEARCHING = 1
+    FILLING = 2
 
-    def play(self, stop, q, sec):
-        print("You can press Q button to stop the test!")
-        while True and not stop.wait(0.01):
-            time.sleep(sec)
-            frame = q.get()
-            cv.imshow("camera-tups", frame)
-            if cv.waitKey(10) & 0xFF == ord('q'):
-                break
-        cv.destroyWindow("camera-tups")
 
-    def stream(self, stop, q, stream):
-        while stream.isOpened() and not stop.wait(0.01):
-            ret, frame = stream.read()
-            if ret is not True:
-                break
-            if q.full():
-                q.get()
-            q.put(frame)
+def fetch(server):
 
-    def test_camera(self):
-        if not self.stream_thread.isAlive():
-            self.stream_thread.start()
-        if not self.play_thread.isAlive():
-            self.play_thread.start()
+    state = SockState.SEARCHING
+    imgdata = None
+    framewidth = 0
+    frameheight = 0
+    frameformat = 0
+    framesize = 0
 
-    def get_stream(self):
-        if not self.stream_thread.isAlive():
-            self.stream_thread.start()
-        return self.queue
+    while True:
+        datagram = server.recv(65536)
+        if not datagram:
+            return None
 
-    def terminate(self):
-        self.stop.set()
-        if self.play_thread.isAlive():
-            self.play_thread.join()
-        if self.stream_thread.isAlive():
-            self.stream_thread.join()
+        if state == SockState.SEARCHING:
+            if len(datagram) < 12 or len(datagram) > 64:
+                continue
+            if not datagram.startswith(b'OHMNICAM'):
+                continue
+            msgtype = unpack("I", datagram[8:12])
+            if msgtype[0] == 1:
+                params = unpack("IIII", datagram[12:28])
+
+                state = SockState.FILLING
+                imgdata = bytearray()
+
+                framewidth = params[0]
+                frameheight = params[1]
+                frameformat = params[2]
+                framesize = params[3]
+
+        elif state == SockState.FILLING:
+            imgdata.extend(datagram)
+            if len(imgdata) < framesize:
+                continue
+            imgbytes = bytes(imgdata)
+            newim = Image.frombytes(
+                "L", (framewidth, frameheight), imgbytes, "raw", "L")
+            rgbim = newim.convert("RGB")
+            state = SockState.SEARCHING
+            return rgbim

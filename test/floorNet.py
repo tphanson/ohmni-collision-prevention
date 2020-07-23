@@ -1,21 +1,21 @@
 import time
 import cv2 as cv
+import numpy as np
 
-from utils.camera import Camera
+from utils import camera
 from src.floorNet import FloorNet
 
 
-def infer():
+def infer(server):
     # Image source
-    cam = Camera()
-    stream = cam.get_stream()
     floorNet = FloorNet()
     # Prediction
     while True:
         start = time.time()
         print("======================================")
         # Infer
-        raw_img = stream.get()
+        pilimg = camera.fetch(server)
+        raw_img = np.asarray(pilimg)
         img, mask = floorNet.predict(raw_img)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
