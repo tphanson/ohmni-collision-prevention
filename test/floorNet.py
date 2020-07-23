@@ -1,28 +1,27 @@
 import time
 import cv2 as cv
-import numpy as np
 
-from utils import camera, ros
+from utils import ros
 from src.floorNet import FloorNet
 
 
-def infer(server):
+def infer():
     # Init modules
     floorNet = FloorNet()
     rosimg = ros.ROSImage()
     rosimg.client.run()
+    camera = cv.VideoCapture(0)
     # Prediction
     while True:
         start = time.time()
         print("======================================")
         # Infer
-        pilimg = camera.fetch(server)
-        raw_img = np.asarray(pilimg)
-        img, mask = floorNet.predict(raw_img)
+        ret, frame = camera.read()
+        img, mask = floorNet.predict(frame)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
         cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
-        rosimg.apush(raw_img)
+        rosimg.apush(frame)
 
         # Calculate frames per second (FPS)
         end = time.time()
