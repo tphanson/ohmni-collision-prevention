@@ -19,7 +19,7 @@ def infer(debug=False):
         print("======================================")
         # Infer
         _, frame = camera.read()
-        _, mask = floorNet.predict(frame)
+        img, mask = floorNet.predict(frame)
         # Detect collision
         detector = mask[90:110, 85:139]
         area = (139-85)*(110-90)
