@@ -20,6 +20,7 @@ def infer(botshell, debug=False):
         rosimg = ros.ROSImage()
         rosimg.client.run()
     camera = cv.VideoCapture(1)
+    say = True
     # Prediction
     while True:
         start = time.time()
@@ -34,6 +35,10 @@ def infer(botshell, debug=False):
         confidence = collision/area
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
+            if say:
+                botshell.sendall(b'say Stop it, idiots\n')
+        else:
+            say = False
         # Visualize
         if debug:
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
