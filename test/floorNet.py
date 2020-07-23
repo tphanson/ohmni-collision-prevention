@@ -35,7 +35,7 @@ def infer(botshell, debug=False):
         confidence = collision/area
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
-            if say:
+            if not say:
                 botshell.sendall(b'say Stop it, idiots\n')
                 say = True
         else:
