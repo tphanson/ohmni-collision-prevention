@@ -13,7 +13,7 @@ CENTROID = (112, 90)
 )
 
 
-def infer(debug=False):
+def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
     if debug:
@@ -33,7 +33,8 @@ def infer(debug=False):
         collision = np.sum(detector)
         confidence = collision/area
         if confidence > 0.2:
-            print('Stop, idiots!')
+            print('Stop, idiots!', confidence)
+            botshell.sendall(b'say Stop idiots\n')
         # Visualize
         if debug:
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
