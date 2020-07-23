@@ -33,8 +33,8 @@ def infer(botshell, debug=False):
         collision = np.sum(detector)
         confidence = collision/area
         if confidence > 0.2:
-            print('Stop, idiots!', confidence)
-            botshell.sendall(b'say Stop idiots\n')
+            print('Stop it, idiots!', confidence)
+            botshell.sendall(b'say Stop it, idiots\n')
         # Visualize
         if debug:
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
