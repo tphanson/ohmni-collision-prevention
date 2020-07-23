@@ -19,6 +19,7 @@ def infer():
         # Infer
         _, frame = camera.read()
         img, mask = floorNet.predict(frame)
+        print(img)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
         collision = np.zeros(mask.shape, dtype=np.float)
