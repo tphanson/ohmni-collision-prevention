@@ -18,6 +18,7 @@ def infer():
         # Infer
         _, frame = camera.read()
         img, mask = floorNet.predict(frame)
+        print(frame.shape, img.shape, mask.shape)
         # Visualize
         mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
         # cv.addWeighted(mask, 0.5, img, 0.5, 0, img)
