@@ -20,7 +20,7 @@ def infer(botshell, debug=False):
         rosimg = ros.ROSImage()
         rosimg.client.run()
     camera = cv.VideoCapture(1)
-    say = True
+    say = False
     # Prediction
     while True:
         start = time.time()
@@ -37,6 +37,7 @@ def infer(botshell, debug=False):
             print('Stop it, idiots!', confidence)
             if say:
                 botshell.sendall(b'say Stop it, idiots\n')
+                say = True
         else:
             say = False
         # Visualize
