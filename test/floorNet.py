@@ -18,15 +18,14 @@ def infer():
         print("======================================")
         # Infer
         _, frame = camera.read()
-        img, mask = floorNet.predict(frame)
+        _, mask = floorNet.predict(frame)
         # Visualize
-        mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
+        mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) * 255
         collision = np.zeros(mask.shape, dtype=np.float32)
         cv.line(collision, (90, 90), (134, 90), (0, 0, 255), 15)
-        collision = collision/255
         cv.addWeighted(mask, 0.5, collision, 0.5, 0, mask)
 
-        rosimg.apush(mask * 255)
+        rosimg.apush(mask)
 
         # Calculate frames per second (FPS)
         end = time.time()
