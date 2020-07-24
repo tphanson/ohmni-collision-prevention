@@ -2,7 +2,7 @@ import time
 import cv2 as cv
 import numpy as np
 
-from utils import ros
+from utils import ros, image
 from src.floorNet import FloorNet
 
 BOX = (40, 20)
@@ -26,6 +26,7 @@ def infer(botshell, debug=False):
         print("======================================")
         # Infer
         _, frame = camera.read()
+        frame = image.undistort(frame)
         img, mask = floorNet.predict(frame)
         # Detect collision
         detector = mask[YMIN:YMAX, XMIN:XMAX]
@@ -34,7 +35,7 @@ def infer(botshell, debug=False):
         confidence = collision/area
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
-            botshell.sendall(b'manual_move 0 0\n')
+            # botshell.sendall(b'manual_move 0 0\n')
         # Visualize
         if debug:
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
