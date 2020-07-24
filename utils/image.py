@@ -13,6 +13,5 @@ def undistort(img):
     camera_matrix = np.copy(CAMERA_MATRIX)
     camera_matrix[0] = camera_matrix[0] * img.shape[1]
     camera_matrix[1] = camera_matrix[1] * img.shape[0]
-    print(camera_matrix, img.shape)
     undistort_img = cv.undistort(img, camera_matrix, DISTORTION_COEFFICIENCES)
     return undistort_img
