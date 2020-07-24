@@ -10,7 +10,8 @@ DISTORTION_COEFFICIENCES = np.array(
 
 def undistort(img):
     """ Only for Ohmni's nav camera """
-    camera_matrix = np.array([])
+    camera_matrix = CAMERA_MATRIX
+    print(camera_matrix, img.shape)
     camera_matrix[0] = CAMERA_MATRIX[0] * img.shape[0]
     camera_matrix[1] = CAMERA_MATRIX[1] * img.shape[1]
     undistort_img = cv.undistort(img, camera_matrix, DISTORTION_COEFFICIENCES)
