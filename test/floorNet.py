@@ -2,7 +2,7 @@ import time
 import cv2 as cv
 import numpy as np
 
-from utils import ros, image
+from utils import ros
 from src.floorNet import FloorNet
 
 BOX = (50, 2)
@@ -13,13 +13,13 @@ CENTROID = (112, 90)
 )
 
 
-def infer(botshell, debug=False):
+def infer(debug=False):
     # Init modules
     floorNet = FloorNet()
     if debug:
         rosimg = ros.ROSImage()
         rosimg.client.run()
-    camera = cv.VideoCapture(1)
+    camera = cv.VideoCapture(2)
     # Prediction
     while True:
         start = time.time()
