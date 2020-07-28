@@ -6,7 +6,7 @@ from utils import ros, image
 from src.floorNet import FloorNet
 
 BOX = (50, 2)
-CENTROID = (112, 95)
+CENTROID = (112, 90)
 (XMIN, XMAX, YMIN, YMAX) = (
     int(CENTROID[0] - BOX[0]/2), int(CENTROID[0]+BOX[0]/2),
     int(CENTROID[1] - BOX[1]), int(CENTROID[1])
