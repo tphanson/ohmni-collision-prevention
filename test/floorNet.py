@@ -36,7 +36,7 @@ def infer(botshell, debug=False):
         confidence = collision/area
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
-            botshell.sendall(b'manual_move 1 1\n')
+            botshell.sendall(b'manual_move -500 500\n')
         else:
             botshell.sendall(b'manual_move 0 0\n')
         # Visualize
