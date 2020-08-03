@@ -36,7 +36,7 @@ def infer(debug=False):
         confidence = collision/area
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
-            # botshell.sendall(b'manual_move 0 0\n')
+            botshell.sendall(b'manual_move 1 1\n')
         # Visualize
         if debug:
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
