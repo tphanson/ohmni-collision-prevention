@@ -27,7 +27,7 @@ def infer(botshell, debug=False):
         start = time.time()
         print("======================================")
         _, img = camera.read()
-        print(img.shape)
+        print(img)
         rosimg.apush(img)
 
         # Infer
