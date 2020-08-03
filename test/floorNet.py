@@ -5,8 +5,8 @@ import numpy as np
 from utils import ros
 from src.floorNet import FloorNet
 
-BOX = (50, 2)
-CENTROID = (112, 90)
+BOX = (50, 1)
+CENTROID = (112, 80)
 (XMIN, XMAX, YMIN, YMAX) = (
     int(CENTROID[0] - BOX[0]/2), int(CENTROID[0]+BOX[0]/2),
     int(CENTROID[1] - BOX[1]), int(CENTROID[1])
