@@ -51,6 +51,10 @@ def infer(botshell, debug=False):
 
         # Calculate frames per second (FPS)
         end = time.time()
+        delay = 0.05 - end + start
+        if delay > 0:
+            time.sleep(delay)
+        adjust = time.time()
+        fps = 1/(adjust-start)
         print('Total estimated time: {:.4f}'.format(end-start))
-        fps = 1/(end-start)
         print("FPS: {:.1f}".format(fps))
