@@ -13,7 +13,7 @@ CENTROID = (112, 90)
 )
 
 
-def infer(debug=False):
+def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
     if debug:
