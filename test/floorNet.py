@@ -27,6 +27,7 @@ def infer(botshell, debug=False):
         start = time.time()
         print("======================================")
         _, img = camera.read()
+        img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
         rosimg.apush(img)
 
         # Infer
