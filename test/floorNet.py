@@ -20,6 +20,8 @@ def infer(debug=False):
         rosimg = ros.ROSImage()
         rosimg.client.run()
     camera = cv.VideoCapture(1)
+    camera.set(3, 320)
+    camera.set(4, 240)
     # Prediction
     while True:
         start = time.time()
