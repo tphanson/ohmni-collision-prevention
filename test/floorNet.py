@@ -27,7 +27,7 @@ def infer(botshell, debug=False):
         start = time.time()
         print("======================================")
         _, img = camera.read()
-        img = cv.resize(img, (96, 96))
+        img = cv.resize(img, (224, 224))
         rosimg.apush(img)
 
         # Infer
@@ -52,10 +52,6 @@ def infer(botshell, debug=False):
 
         # Calculate frames per second (FPS)
         end = time.time()
-        delay = 0.1 - end + start
-        if delay > 0:
-            time.sleep(delay)
-        adjust = time.time()
-        fps = 1/(adjust-start)
+        fps = 1/(end-start)
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
