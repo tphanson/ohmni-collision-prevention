@@ -26,29 +26,26 @@ def infer(botshell, debug=False):
     while True:
         start = time.time()
         print("======================================")
-        _, img = camera.read()
-        img = cv.resize(img, (224, 224))
-        rosimg.apush(img)
 
         # Infer
-        # _, frame = camera.read()
-        # img, mask = floorNet.predict(frame)
-        # # Detect collision
-        # detector = mask[YMIN:YMAX, XMIN:XMAX]
-        # area = (YMAX-YMIN)*(XMAX-XMIN)
-        # collision = np.sum(detector)
-        # confidence = collision/area
-        # if confidence > 0.2:
-        #     print('Stop it, idiots!', confidence)
-        #     botshell.sendall(b'manual_move -500 500\n')
-        # else:
-        #     botshell.sendall(b'manual_move 0 0\n')
-        # # Visualize
-        # if debug:
-        #     mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
-        #     mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-        #     cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
-        #     rosimg.apush(mask * 255)
+        _, frame = camera.read()
+        img, mask = floorNet.predict(frame)
+        # Detect collision
+        detector = mask[YMIN:YMAX, XMIN:XMAX]
+        area = (YMAX-YMIN)*(XMAX-XMIN)
+        collision = np.sum(detector)
+        confidence = collision/area
+        if confidence > 0.2:
+            print('Stop it, idiots!', confidence)
+            botshell.sendall(b'manual_move -500 500\n')
+        else:
+            botshell.sendall(b'manual_move 0 0\n')
+        # Visualize
+        if debug:
+            mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
+            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
+            cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
+            rosimg.apush(mask * 255)
 
         # Calculate frames per second (FPS)
         end = time.time()
