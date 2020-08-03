@@ -57,10 +57,13 @@ def infer(botshell, debug=False):
             botshell.sendall(b'manual_move 0 0\n')
         # Visualize
         if debug:
-            # mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
-            # mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-            # cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
-            rosimg.apush(img * 255)
+            mask[DANGER_YMIN:DANGER_YMAX, DANGER_XMIN:DANGER_XMAX] = mask[DANGER_YMIN:DANGER_YMAX,
+                                                                          DANGER_XMIN:DANGER_XMAX] + 0.5
+            mask[WARNING_YMIN:WARNING_YMAX, WARNING_XMIN:WARNING_XMAX] = mask[WARNING_YMIN:WARNING_YMAX,
+                                                                              WARNING_XMIN:WARNING_XMAX] + 0.5
+            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
+            cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
+            rosimg.apush(mask * 255)
 
         # Calculate frames per second (FPS)
         end = time.time()
