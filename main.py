@@ -1,6 +1,6 @@
 import sys
 import socket
-from test import floorNet
+from test import floorNet, datacollector
 
 # Init botshell
 botshell = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -14,6 +14,8 @@ if __name__ == "__main__":
             floorNet.infer(botshell, debug=True)
         if sys.argv[2] == 'infer':
             floorNet.infer(botshell, debug=False)
-
+    elif sys.argv[1] == '--ds':
+        if sys.argv[2] == 'collect':
+            datacollector.collect()
     else:
         print("Error: Invalid option!")
