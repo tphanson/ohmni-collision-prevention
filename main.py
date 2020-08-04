@@ -15,7 +15,9 @@ if __name__ == "__main__":
         if sys.argv[2] == 'infer':
             floorNet.infer(botshell, debug=False)
     elif sys.argv[1] == '--ds':
-        if sys.argv[2] == 'collect':
-            datacollector.collect()
+        if sys.argv[2] == 'client_collect':
+            datacollector.client_collect()
+        if sys.argv[2] == 'host_collect':
+            datacollector.host_collect()
     else:
         print("Error: Invalid option!")
