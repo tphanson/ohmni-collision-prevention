@@ -18,7 +18,7 @@ def infer(botshell, debug=False):
     floorNet = FloorNet()
     if debug:
         rosimg = ros.ROSImage()
-        rosimg.client.run()
+        talker = rosimg.gen_talker('/ocp/draw_image/compressed')
     camera = cv.VideoCapture(1)
     # camera.set(3, 224)
     # camera.set(4, 224)
@@ -45,10 +45,13 @@ def infer(botshell, debug=False):
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
-            rosimg.apush(mask * 255)
+            talker.push(mask * 255)
 
         # Calculate frames per second (FPS)
         end = time.time()
         fps = 1/(end-start)
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
+
+    talker.stop()
+    rosimg.stop()
