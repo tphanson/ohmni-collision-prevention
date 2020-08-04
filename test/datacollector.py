@@ -10,5 +10,4 @@ def collect():
     while True:
         _, frame = camera.read()
         talker.push(frame)
-        time.sleep(5)y(5000) & 0xFF == ord('q'):
-            break
+        time.sleep(5)
