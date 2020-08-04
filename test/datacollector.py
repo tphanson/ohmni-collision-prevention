@@ -16,7 +16,8 @@ def host_collect():
 def client_collect():
     rosimg = ros.ROSImage(host='192.168.123.53')
     listener = rosimg.gen_listener('/ds/nav_cam/compressed')
-    _, img = listener.get()
-    cv.imshow('Video', img)
-    if cv.waitKey(10) & 0xFF == ord('q'):
-        break
+    while True:
+        _, img = listener.get()
+        cv.imshow('Video', img)
+        if cv.waitKey(5000) & 0xFF == ord('q'):
+            break
