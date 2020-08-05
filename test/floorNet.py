@@ -29,6 +29,7 @@ def infer(botshell, debug=False):
 
         # Infer
         _, frame = camera.read()
+        print('*** Debug camera shape:', frame.shape)
         img, mask = floorNet.predict(frame)
         # Detect collision
         detector = mask[YMIN:YMAX, XMIN:XMAX]
