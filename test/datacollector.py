@@ -6,7 +6,7 @@ from utils import ros
 def collect():
     rosimg = ros.ROSImage()
     talker = rosimg.gen_talker('/ds/nav_cam/compressed')
-    camera = cv.VideoCapture(1)
+    camera = cv.VideoCapture(2)
     while True:
         _, frame = camera.read()
         talker.push(frame)

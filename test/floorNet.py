@@ -19,7 +19,7 @@ def infer(botshell, debug=False):
     if debug:
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
-    camera = cv.VideoCapture(1)
+    camera = cv.VideoCapture(2)
     # camera.set(3, 224)
     # camera.set(4, 224)
     # Prediction
