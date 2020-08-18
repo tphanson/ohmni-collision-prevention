@@ -13,14 +13,16 @@ def calibrate():
     ros = ROSImage()
     talker = ros.gen_talker('/ds_calib/image/compressed')
     camera = cv.VideoCapture(1)
+    step = 0
     count = 0
     while True:
-        count += 1
+        step += 1
         ok, img = camera.read()
-        print("================== Image:", count, ok)
-        if ok:
+        print("================== Image:", step, count, ok)
+        if ok and step % 100 == 0:
+            count += 1
             talker.push(img)
-        time.sleep(0.06)  # Limit at 10Hz
+        time.sleep(0.1)  # Limit at 10Hz
 
 
 def collect():
@@ -36,4 +38,4 @@ def collect():
         print("================== Image:", name, ok)
         if ok:
             cv.imwrite(name, img)
-        time.sleep(5)
+        time.sleep(0.1)
