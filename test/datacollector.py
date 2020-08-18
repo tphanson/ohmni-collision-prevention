@@ -8,7 +8,7 @@ DESTINATION = '../ds/'
 def calibrate():
     ros = ROSImage()
     talker = ros.gen_talker('/ds_calib/image/compressed')
-    camera = cv.VideoCapture(1)
+    camera = cv.VideoCapture(2)
     count = 0
     while True:
         count += 1
