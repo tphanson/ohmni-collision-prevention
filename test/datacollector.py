@@ -21,7 +21,7 @@ def calibrate():
 
 
 def collect():
-    camera = cv.VideoCapture(2)
+    camera = cv.VideoCapture(1)
     count = 0
     while True:
         count += 1
