@@ -28,6 +28,6 @@ def collect():
         ok, img = camera.read()
         if ok:
             name = DESTINATION+str(count)+'.jpg'
-            print("================== Image:", name)
+            print("================== Image:", name, ok)
             cv.imwrite(name, img)
         time.sleep(5)
