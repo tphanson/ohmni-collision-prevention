@@ -7,10 +7,12 @@ from utils.ros import ROSImage
 USB_PATH = '/storage/3115-7E1B/ds/'
 DESTINATION = datetime.datetime.now().strftime(
     '%c').replace(' ', '_').replace(':', '_')
-os.mkdir(USB_PATH+DESTINATION)
 
 
 def calibrate():
+    # Create save folder
+    os.mkdir(USB_PATH+DESTINATION)
+    # Main process
     ros = ROSImage()
     talker = ros.gen_talker('/ds_calib/image/compressed')
     camera = cv.VideoCapture(1)
