@@ -17,7 +17,7 @@ def calibrate():
         if ok:
             talker.push(img)
         # Limit 20Hz
-        time.sleep(0.02)
+        time.sleep(0.04)
 
 
 def collect():
