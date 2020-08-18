@@ -4,10 +4,10 @@ import time
 import cv2 as cv
 from utils.ros import ROSImage
 
-DESTINATION = '/storage/3115-7E1B/ds/'
-FOLDER = datetime.datetime.now().strftime(
+USB_PATH = '/storage/3115-7E1B/ds/'
+DESTINATION = datetime.datetime.now().strftime(
     '%c').replace(' ', '_').replace(':', '_')
-os.mkdir(DESTINATION+FOLDER)
+os.mkdir(USB_PATH+DESTINATION)
 
 
 def calibrate():
@@ -31,8 +31,8 @@ def collect():
     while True:
         count += 1
         ok, img = camera.read()
+        name = USB_PATH + DESTINATION + '/' + str(count) + '.jpg'
+        print("================== Image:", name, ok)
         if ok:
-            name = DESTINATION+FOLDER+'/'+str(count)+'.jpg'
-            print("================== Image:", name, ok)
             cv.imwrite(name, img)
         time.sleep(5)
