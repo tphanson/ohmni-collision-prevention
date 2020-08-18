@@ -9,7 +9,10 @@ def calibrate():
     ros = ROSImage()
     talker = ros.gen_talker('/ds_calib/image/compressed')
     camera = cv.VideoCapture(2)
+    count = 0
     while True:
+        count += 1
+        print("================== Image:", count)
         ok, img = camera.read()
         if ok:
             talker.push(img)
