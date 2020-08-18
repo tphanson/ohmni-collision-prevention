@@ -11,6 +11,7 @@ def collect():
         count += 1
         ok, img = camera.read()
         if ok:
-            print("================== Image No:", count)
-            cv.imwrite(DESTINATION+str(count)+'.jpg', img)
+            name = DESTINATION+str(count)+'.jpg'
+            print("================== Image:", name)
+            cv.imwrite(name, img)
         time.sleep(5)
