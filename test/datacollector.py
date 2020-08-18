@@ -12,12 +12,13 @@ def calibrate():
     count = 0
     while True:
         count += 1
-        print("================== Image:", count)
         ok, img = camera.read()
+        print("================== Image:", count, ok)
         if ok:
             talker.push(img)
         # Limit 20Hz
         time.sleep(0.1)
+
 
 def collect():
     camera = cv.VideoCapture(2)
