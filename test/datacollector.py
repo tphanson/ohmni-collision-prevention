@@ -30,12 +30,14 @@ def collect():
     os.mkdir(USB_PATH+DESTINATION)
     # Main process
     camera = cv.VideoCapture(1)
+    step = 0
     count = 0
     while True:
-        count += 1
+        step += 1
         ok, img = camera.read()
-        name = USB_PATH + DESTINATION + '/' + str(count) + '.jpg'
-        print("================== Image:", name, ok)
-        if ok:
+        if ok and step % 100 == 0:
+            count += 1
+            name = USB_PATH + DESTINATION + '/' + str(count) + '.jpg'
+            print("================== Image:", name)
             cv.imwrite(name, img)
         time.sleep(0.1)
