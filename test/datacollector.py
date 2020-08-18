@@ -10,9 +10,6 @@ DESTINATION = datetime.datetime.now().strftime(
 
 
 def calibrate():
-    # Create save folder
-    os.mkdir(USB_PATH+DESTINATION)
-    # Main process
     ros = ROSImage()
     talker = ros.gen_talker('/ds_calib/image/compressed')
     camera = cv.VideoCapture(1)
@@ -28,6 +25,9 @@ def calibrate():
 
 
 def collect():
+    # Create save folder
+    os.mkdir(USB_PATH+DESTINATION)
+    # Main process
     camera = cv.VideoCapture(1)
     count = 0
     while True:
