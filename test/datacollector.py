@@ -5,7 +5,8 @@ import cv2 as cv
 from utils.ros import ROSImage
 
 DESTINATION = '/storage/3115-7E1B/ds/'
-FOLDER = datetime.datetime.now().strftime('%c')
+FOLDER = datetime.datetime.now().strftime(
+    '%c').replace(' ', '_').replace(':', '_')
 os.mkdir(DESTINATION+FOLDER)
 
 
