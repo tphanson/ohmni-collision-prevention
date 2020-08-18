@@ -1,8 +1,7 @@
 import time
 import cv2 as cv
 
-# It may be changed with other devices
-USB_PATH = '/mnt/media_rw/3115-7E1B/ds/'
+DESTINATION = '../ds/'
 
 
 def collect():
@@ -12,5 +11,5 @@ def collect():
         count += 1
         ok, img = camera.read()
         if ok:
-            cv.imwrite(USB_PATH+str(count)+'.jpg', img)
+            cv.imwrite(DESTINATION+str(count)+'.jpg', img)
         time.sleep(5)
