@@ -2,7 +2,7 @@ import time
 import cv2 as cv
 from utils.ros import ROSImage
 
-DESTINATION = './ds/'
+DESTINATION = '/storage/emulated/0/Pictures/'
 
 
 def calibrate():
