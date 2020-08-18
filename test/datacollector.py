@@ -1,8 +1,20 @@
 import time
 import cv2 as cv
+from utils.ros import ROSImage
 
 DESTINATION = '../ds/'
 
+
+def calibrate():
+    ros = ROSImage()
+    talker = ros.gen_talker('/ds_calib/image/compressed')
+    camera = cv.VideoCapture(2)
+    while True:
+        ok, img = camera.read()
+        if ok:
+            talker.push(img)
+        # Limit 20Hz
+        time.sleep(0.05)
 
 def collect():
     camera = cv.VideoCapture(2)
