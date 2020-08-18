@@ -15,6 +15,8 @@ if __name__ == "__main__":
         if sys.argv[2] == 'infer':
             floorNet.infer(botshell, debug=False)
     elif sys.argv[1] == '--ds':
+        if sys.argv[2] == 'calibrate':
+            datacollector.calibrate()
         if sys.argv[2] == 'collect':
             datacollector.collect()
     else:
