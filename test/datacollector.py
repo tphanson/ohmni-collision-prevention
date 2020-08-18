@@ -1,8 +1,12 @@
+import os
+import datetime
 import time
 import cv2 as cv
 from utils.ros import ROSImage
 
 DESTINATION = '/storage/3115-7E1B/ds/'
+FOLDER = datetime.datetime.now().strftime('%c')
+os.mkdir(DESTINATION+FOLDER)
 
 
 def calibrate():
@@ -27,7 +31,7 @@ def collect():
         count += 1
         ok, img = camera.read()
         if ok:
-            name = DESTINATION+str(count)+'.jpg'
+            name = DESTINATION+FOLDER+'/'+str(count)+'.jpg'
             print("================== Image:", name, ok)
             cv.imwrite(name, img)
         time.sleep(5)
