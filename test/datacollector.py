@@ -9,8 +9,8 @@ def collect():
     count = 0
     while True:
         count += 1
-        print("================== Image No:", count)
         ok, img = camera.read()
         if ok:
+            print("================== Image No:", count)
             cv.imwrite(DESTINATION+str(count)+'.jpg', img)
         time.sleep(5)
