@@ -17,6 +17,7 @@ r = 25.
 # The two lines below could be merged, but I stored the mask
 # for code clarity.
 anchor = (x[np.newaxis, :]-cx)**2 + (y[:, np.newaxis]-cy)**2
+pts = np.array([[0, 0], [1, 1]], dtype=np.int32)
 print(anchor)
 mask = np.bitwise_and(anchor <= r**2, anchor > (r-1)**2)
 img[mask] = [255, 0, 0]
