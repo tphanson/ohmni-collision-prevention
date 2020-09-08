@@ -12,7 +12,7 @@ CENTROID = (112, 80)
     int(CENTROID[1] - BOX[1]), int(CENTROID[1])
 )
 COLOR_RED = [0, 0, 255]
-OPACITY = 0.1
+OPACITY = 0.3
 
 
 def infer(botshell, debug=False):
