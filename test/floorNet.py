@@ -2,7 +2,7 @@ import time
 import cv2 as cv
 import numpy as np
 
-from utils import ros, odometry
+from utils import ros, odometry, image
 from src.floorNet import FloorNet
 
 BOX = (50, 10)
@@ -50,7 +50,7 @@ def infer(botshell, debug=False):
             img = cv.addWeighted(mask, OPACITY, img, 1-OPACITY, 0)
             polygon = odo.generate_driving_zone(1000, np.pi)
             img = img * 255
-            img = cv.fillPoly(img, [polygon], COLOR_RED)
+            img = image.draw_polygon(img, polygon)
             talker.push(img)
 
         # Calculate frames per second (FPS)
