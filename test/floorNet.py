@@ -12,6 +12,7 @@ CENTROID = (112, 80)
     int(CENTROID[1] - BOX[1]), int(CENTROID[1])
 )
 COLOR_RED = [0, 0, 255]
+OPACITY = 0.5
 
 
 def infer(botshell, debug=False):
@@ -46,7 +47,7 @@ def infer(botshell, debug=False):
         if debug:
             # mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-            cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
+            mask = cv.addWeighted(mask, OPACITY, img, 1-OPACITY, 0)
             polygon = odo.generate_driving_zone(1000, np.pi)
             mask = mask * 255
             mask = cv.fillPoly(mask, [polygon], COLOR_RED)
