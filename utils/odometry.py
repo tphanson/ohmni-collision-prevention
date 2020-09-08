@@ -4,7 +4,6 @@ import cv2 as cv
 
 BOT_WIDTH = 450
 BOT_CENTER = [0, -100]
-COLOR_RED = [255, 0, 0]
 
 CAMERA_MATRIX = np.array([[0.4315, 0, 0.4695], [0, 0.7674, 0.5099], [0, 0, 1]])
 RVEC = np.array([-np.deg2rad(11), 0, 0])
@@ -14,7 +13,7 @@ DISTORTION_COEFF = np.array(
 
 
 class Odometry:
-    def __init__(self, image_shape=(224, 244), num_of_samples=100):
+    def __init__(self, image_shape, num_of_samples=100):
         self.image_shape = image_shape
         self.num_of_samples = num_of_samples
 

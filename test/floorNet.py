@@ -17,7 +17,7 @@ COLOR_RED = [0, 0, 255]
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
-    odo = odometry.Odometry()
+    odo = odometry.Odometry(floorNet.image_shape)
     if debug:
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
@@ -44,7 +44,7 @@ def infer(botshell, debug=False):
             botshell.sendall(b'manual_move 0 0\n')
         # Visualize
         if debug:
-            mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
+            # mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
             polygon = odo.generate_driving_zone(1000, np.pi)

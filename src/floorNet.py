@@ -60,6 +60,7 @@ class FloorNet:
         EDGE_MODEL = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                   '../models/ohmnilabs_floornet_224_quant_postprocess_edgetpu.tflite')
         self.inference = Inference(EDGE_MODEL)
+        self.image_shape = self.inference.image_shape
 
     def predict(self, img):
         return self.inference.predict(img)
