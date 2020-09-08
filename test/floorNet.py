@@ -5,14 +5,6 @@ import numpy as np
 from utils import ros, odometry, image
 from src.floorNet import FloorNet
 
-BOX = (50, 10)
-CENTROID = (112, 80)
-(XMIN, XMAX, YMIN, YMAX) = (
-    int(CENTROID[0] - BOX[0]/2), int(CENTROID[0]+BOX[0]/2),
-    int(CENTROID[1] - BOX[1]), int(CENTROID[1])
-)
-OPACITY = 0.5
-
 
 def infer(botshell, debug=False):
     # Init modules
@@ -22,11 +14,11 @@ def infer(botshell, debug=False):
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
     camera = cv.VideoCapture(1)
+    
     # Prediction
     while True:
         start = time.time()
         print("======================================")
-
         # Infer
         _, frame = camera.read()
         print('*** Debug camera shape:', frame.shape)
@@ -35,12 +27,8 @@ def infer(botshell, debug=False):
         # Detect collision
         driving_zone = odo.generate_driving_zone(1000, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
-        print(np.sum(mask[bool_mask]), np.sum(bool_mask), np.sum(mask))
-
-        detector = mask[YMIN:YMAX, XMIN:XMAX]
-        area = (YMAX-YMIN)*(XMAX-XMIN)
-        collision = np.sum(detector)
-        confidence = collision/area
+        confidence = np.sum(mask[bool_mask])/np.sum(bool_mask)
+        print('*** Debug confidence:', confidence)
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
             # botshell.sendall(b'manual_move -500 500\n')
@@ -48,9 +36,8 @@ def infer(botshell, debug=False):
             botshell.sendall(b'manual_move 0 0\n')
         # Visualize
         if debug:
-            # mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-            img = cv.addWeighted(mask, OPACITY, img, 1-OPACITY, 0)
+            img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             img = image.draw_polygon(img, driving_zone)
             talker.push(img)
