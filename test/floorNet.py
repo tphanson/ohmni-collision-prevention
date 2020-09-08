@@ -2,7 +2,7 @@ import time
 import cv2 as cv
 import numpy as np
 
-from utils import ros
+from utils import ros, odometry
 from src.floorNet import FloorNet
 
 BOX = (50, 10)
@@ -11,17 +11,17 @@ CENTROID = (112, 80)
     int(CENTROID[0] - BOX[0]/2), int(CENTROID[0]+BOX[0]/2),
     int(CENTROID[1] - BOX[1]), int(CENTROID[1])
 )
+COLOR_RED = [255, 0, 0]
 
 
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
+    odo = odometry.Odometry((480, 640))
     if debug:
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
     camera = cv.VideoCapture(1)
-    # camera.set(3, 224)
-    # camera.set(4, 224)
     # Prediction
     while True:
         start = time.time()
@@ -47,6 +47,9 @@ def infer(botshell, debug=False):
             mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
+            polygon = odo.generate_driving_zone(1000, np.pi)
+            mask = cv.fillPoly(mask, np.array(
+                [polygon], dtype=np.int32), COLOR_RED)
             talker.push(mask * 255)
 
         # Calculate frames per second (FPS)
