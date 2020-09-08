@@ -35,7 +35,7 @@ def infer(botshell, debug=False):
         # Detect collision
         driving_zone = odo.generate_driving_zone(1000, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
-        print(np.sum(mask[bool_mask]), np.sum(mask))
+        print(np.sum(mask[bool_mask]), np.sum(bool_mask), np.sum(mask))
 
         detector = mask[YMIN:YMAX, XMIN:XMAX]
         area = (YMAX-YMIN)*(XMAX-XMIN)
