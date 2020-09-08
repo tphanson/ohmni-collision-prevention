@@ -33,6 +33,10 @@ def infer(botshell, debug=False):
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
         # Detect collision
+        driving_zone = odo.generate_driving_zone(1000, np.pi)
+        bool_mask = image.get_mask_by_polygon(img, driving_zone)
+        print(np.sum(img[bool_mask]), np.sum(img))
+
         detector = mask[YMIN:YMAX, XMIN:XMAX]
         area = (YMAX-YMIN)*(XMAX-XMIN)
         collision = np.sum(detector)
@@ -47,9 +51,8 @@ def infer(botshell, debug=False):
             # mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             img = cv.addWeighted(mask, OPACITY, img, 1-OPACITY, 0)
-            polygon = odo.generate_driving_zone(1000, np.pi)
             img = img * 255
-            img = image.draw_polygon(img, polygon)
+            img = image.draw_polygon(img, driving_zone)
             talker.push(img)
 
         # Calculate frames per second (FPS)
