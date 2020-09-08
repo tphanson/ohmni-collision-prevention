@@ -48,7 +48,6 @@ def infer(botshell, debug=False):
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
             polygon = odo.generate_driving_zone(1000, np.pi)
-            print(polygon.shape)
             mask = cv.fillPoly(mask, np.array(
                 [polygon], dtype=np.int32), COLOR_RED)
             talker.push(mask * 255)
