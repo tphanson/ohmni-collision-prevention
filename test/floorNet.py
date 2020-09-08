@@ -48,9 +48,10 @@ def infer(botshell, debug=False):
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
             polygon = odo.generate_driving_zone(1000, np.pi)
+            mask = mask * 255
             mask = cv.fillPoly(mask, np.array(
                 [polygon], dtype=np.int32), COLOR_RED)
-            talker.push(mask * 255)
+            talker.push(mask)
 
         # Calculate frames per second (FPS)
         end = time.time()
