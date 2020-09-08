@@ -17,7 +17,7 @@ COLOR_RED = [255, 0, 0]
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
-    odo = odometry.Odometry((480, 640))
+    odo = odometry.Odometry()
     if debug:
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
