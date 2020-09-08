@@ -3,7 +3,7 @@ import math
 import cv2 as cv
 
 BOT_WIDTH = 450
-BOT_CENTER = [100, -100]
+BOT_CENTER = [0, -100]
 COLOR_RED = [255, 0, 0]
 
 CAMERA_MATRIX = np.array([[0.4315, 0, 0.4695], [0, 0.7674, 0.5099], [0, 0, 1]])

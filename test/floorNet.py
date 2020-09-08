@@ -11,7 +11,7 @@ CENTROID = (112, 80)
     int(CENTROID[0] - BOX[0]/2), int(CENTROID[0]+BOX[0]/2),
     int(CENTROID[1] - BOX[1]), int(CENTROID[1])
 )
-COLOR_RED = [255, 0, 0]
+COLOR_RED = [0, 0, 255]
 
 
 def infer(botshell, debug=False):
@@ -49,8 +49,7 @@ def infer(botshell, debug=False):
             cv.addWeighted(mask, 0.5, img, 0.5, 0, mask)
             polygon = odo.generate_driving_zone(1000, np.pi)
             mask = mask * 255
-            mask = cv.fillPoly(mask, np.array(
-                [polygon], dtype=np.int32), COLOR_RED)
+            mask = cv.fillPoly(mask, [polygon], COLOR_RED)
             talker.push(mask)
 
         # Calculate frames per second (FPS)
