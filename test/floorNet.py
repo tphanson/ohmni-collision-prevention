@@ -11,7 +11,6 @@ CENTROID = (112, 80)
     int(CENTROID[0] - BOX[0]/2), int(CENTROID[0]+BOX[0]/2),
     int(CENTROID[1] - BOX[1]), int(CENTROID[1])
 )
-COLOR_RED = [0, 0, 255]
 OPACITY = 0.5
 
 
