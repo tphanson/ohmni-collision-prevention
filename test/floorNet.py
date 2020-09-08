@@ -47,7 +47,7 @@ def infer(botshell, debug=False):
         if debug:
             # mask[YMIN:YMAX, XMIN:XMAX] = mask[YMIN:YMAX, XMIN:XMAX] + 0.5
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
-            mask = cv.addWeighted(mask, OPACITY, img, 1-OPACITY)
+            mask = cv.addWeighted(mask, OPACITY, img, 1-OPACITY, 0)
             polygon = odo.generate_driving_zone(1000, np.pi)
             mask = mask * 255
             mask = cv.fillPoly(mask, [polygon], COLOR_RED)
