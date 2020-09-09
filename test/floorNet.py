@@ -32,13 +32,13 @@ def infer(botshell, debug=False):
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
             botshell.sendall(b'get_velocity\n')
-            data = botshell.recv(1024)
-            data = data.decode('utf8')
-            print('Received', data)
-            # [vlft, vfwd] = data.split(',')
-            # vlft, vfwd = float(vlft), float(vfwd)
-            # print('Received', vlft, vfwd)
-            # botshell.sendall(b'manual_move -500 500\n')
+            try:
+                data = botshell.recv(1024)
+                [vlft, vfwd] = data.decode('utf8').split(',')
+                vlft, vfwd = float(vlft), float(vfwd)
+                print('Received', vlft, vfwd)
+            except:
+                pass
         else:
             botshell.sendall(b'manual_move 0 0\n')
         # Visualize
