@@ -35,9 +35,9 @@ def infer(botshell, debug=False):
             data = botshell.recv(1024)
             data = data.decode('utf8')
             print('Received', data)
-            [vlft, vfwd] = data.split(',')
-            vlft, vfwd = float(vlft), float(vfwd)
-            print('Received', vlft, vfwd)
+            # [vlft, vfwd] = data.split(',')
+            # vlft, vfwd = float(vlft), float(vfwd)
+            # print('Received', vlft, vfwd)
             # botshell.sendall(b'manual_move -500 500\n')
         else:
             botshell.sendall(b'manual_move 0 0\n')
