@@ -32,7 +32,7 @@ def infer(botshell, debug=False):
             vleft, vright = vfwd + vlft/2, vfwd - vlft/2
         except ValueError:
             pass
-        print('*** Debug velocities:', vlft, vfwd)
+        print('*** Debug velocities:', vleft, vright)
         # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
