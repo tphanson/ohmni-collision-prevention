@@ -33,7 +33,7 @@ def infer(botshell, debug=False):
             print('Stop it, idiots!', confidence)
             botshell.sendall(b'get_velocity\n')
             data = botshell.recv(1024)
-            print('Received', repr(data))
+            print('Received', str(repr(data)))
             # botshell.sendall(b'manual_move -500 500\n')
         else:
             botshell.sendall(b'manual_move 0 0\n')
