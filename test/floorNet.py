@@ -36,7 +36,7 @@ def infer(botshell, debug=False):
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
         # Detect collision
-        R = 1000 / (vlft + 0.001)
+        R = 1000 / (vlft + 0.000001) # add fraction to prevent zero division
         driving_zone = odo.generate_driving_zone(R, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
         confidence = np.sum(mask[bool_mask])/np.sum(bool_mask)
