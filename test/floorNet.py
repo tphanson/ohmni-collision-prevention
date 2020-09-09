@@ -29,7 +29,7 @@ def infer(botshell, debug=False):
             data = botshell.recv(1024)
             [vlft, vfwd] = data.decode('utf8').split(',')
             vlft, vfwd = float(vlft), float(vfwd)
-            vleft, vright = vfwd + vlft/2, -vfwd + vlft/2
+            vleft, vright = vfwd - vlft/2, vfwd + vlft/2
         except ValueError:
             pass
         print('*** Debug velocities:', vleft, vright)
@@ -38,7 +38,8 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Detect collision
         # Add a fraction to R to prevent zero division
-        R = 1000 / (vleft + vright + 0.000001)
+        R = 225 * (vleft + vright) / np.abs(vleft - vright + 0.000001)
+        print('*** Debug R:', R)
         driving_zone = odo.generate_driving_zone(R, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
         confidence = np.sum(mask[bool_mask])/np.sum(bool_mask)
