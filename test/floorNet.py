@@ -31,7 +31,9 @@ def infer(botshell, debug=False):
         print('*** Debug confidence:', confidence)
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
-            botshell.sendall(b'getVelocity\n')
+            botshell.sendall(b'get_velocity\n')
+            data = botshell.recv(1024)
+            print('Received', repr(data))
             # botshell.sendall(b'manual_move -500 500\n')
         else:
             botshell.sendall(b'manual_move 0 0\n')
