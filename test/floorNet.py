@@ -19,9 +19,20 @@ def infer(botshell, debug=False):
     while True:
         start = time.time()
         print("======================================")
-        # Infer
+        # Get images
         _, frame = camera.read()
         print('*** Debug camera shape:', frame.shape)
+        # Get velocities
+        botshell.sendall(b'get_velocity\n')
+        vleft, vright = 0, 0
+        try:
+            data = botshell.recv(1024)
+            [vleft, vright] = data.decode('utf8').split(',')
+            vleft, vright = float(vleft), float(vright)
+        except ValueError:
+            pass
+        print('*** Debug velocities:', vleft, vright)
+        # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
         # Detect collision
@@ -31,14 +42,6 @@ def infer(botshell, debug=False):
         print('*** Debug confidence:', confidence)
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
-            botshell.sendall(b'get_velocity\n')
-            try:
-                data = botshell.recv(1024)
-                [vlft, vfwd] = data.decode('utf8').split(',')
-                vlft, vfwd = float(vlft), float(vfwd)
-                print('Received', vlft, vfwd)
-            except ValueError:
-                pass
         else:
             botshell.sendall(b'manual_move 0 0\n')
         # Visualize
