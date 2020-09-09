@@ -38,7 +38,8 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Detect collision
         # Add a fraction to R to prevent zero division
-        R = 225 * (vleft + vright) / np.abs(vleft - vright + 0.000001)
+        gamma = vleft/vright
+        R = 225 * (1 + gamma) / np.abs(1 - gamma + 0.000001)
         print('*** Debug R:', R)
         driving_zone = odo.generate_driving_zone(R, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
