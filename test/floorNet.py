@@ -24,19 +24,19 @@ def infer(botshell, debug=False):
         print('*** Debug camera shape:', frame.shape)
         # Get velocities
         botshell.sendall(b'get_velocity\n')
-        vleft, vright = 0, 0
+        vlft, vfwd = 0, 0
         try:
             data = botshell.recv(1024)
-            [vleft, vright] = data.decode('utf8').split(',')
-            vleft, vright = float(vleft), float(vright)
+            [vlft, vfwd] = data.decode('utf8').split(',')
+            vlft, vfwd = float(vlft), float(vfwd)
         except ValueError:
             pass
-        print('*** Debug velocities:', vleft, vright)
+        print('*** Debug velocities:', vlft, vfwd)
         # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
         # Detect collision
-        R = 1000 / (vleft+vright if vleft+vright != 0 else 0.001)
+        R = 1000 / (vlft + 0.001)
         driving_zone = odo.generate_driving_zone(R, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
         confidence = np.sum(mask[bool_mask])/np.sum(bool_mask)
