@@ -14,7 +14,7 @@ def infer(botshell, debug=False):
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
     camera = cv.VideoCapture(1)
-    
+
     # Prediction
     while True:
         start = time.time()
@@ -31,6 +31,7 @@ def infer(botshell, debug=False):
         print('*** Debug confidence:', confidence)
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
+            botshell.sendall(b'getVelocity\n')
             # botshell.sendall(b'manual_move -500 500\n')
         else:
             botshell.sendall(b'manual_move 0 0\n')
