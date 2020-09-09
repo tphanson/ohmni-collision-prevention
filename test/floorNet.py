@@ -33,7 +33,9 @@ def infer(botshell, debug=False):
             print('Stop it, idiots!', confidence)
             botshell.sendall(b'get_velocity\n')
             data = botshell.recv(1024)
-            print('Received', data.decode('utf8'), type(data.decode('utf8')))
+            [vlft, vfwd] = data.decode('utf8').split(',')
+            vlft, vfwd = float(vlft), float(vfwd)
+            print('Received', vlft, vfwd)
             # botshell.sendall(b'manual_move -500 500\n')
         else:
             botshell.sendall(b'manual_move 0 0\n')
