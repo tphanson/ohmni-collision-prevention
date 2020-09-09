@@ -37,7 +37,7 @@ def infer(botshell, debug=False):
                 [vlft, vfwd] = data.decode('utf8').split(',')
                 vlft, vfwd = float(vlft), float(vfwd)
                 print('Received', vlft, vfwd)
-            except:
+            except ValueError:
                 pass
         else:
             botshell.sendall(b'manual_move 0 0\n')
