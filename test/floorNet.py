@@ -38,7 +38,7 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Detect collision
         # Add a fraction to R to prevent zero division
-        gamma = vleft/vright
+        gamma = (vleft + 0.000001)/(vright + 0.000001)
         R = 225 * (1 + gamma) / np.abs(1 - gamma + 0.000001)
         print('*** Debug R:', R)
         driving_zone = odo.generate_driving_zone(R, np.pi)
