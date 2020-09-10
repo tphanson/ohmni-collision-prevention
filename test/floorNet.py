@@ -46,7 +46,8 @@ def infer(botshell, debug=False):
         driving_zone = odo.generate_driving_zone(R, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
         confidence = np.sum(mask[bool_mask])/np.sum(bool_mask)
-        print('*** Debug confidence:', confidence)
+        print('*** Debug confidence:',
+              np.sum(mask[bool_mask]), np.sum(bool_mask), confidence)
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
         else:
