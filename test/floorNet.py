@@ -29,10 +29,10 @@ def infer(botshell, debug=False):
             data = botshell.recv(1024)
             [lvel, angvel] = data.decode('utf8').split(',')
             lvel, angvel = float(lvel), float(angvel)
-            vleft = 800 * lvel + 450 * angvel
-            vright = 800 * lvel - 450 * angvel
+            vleft = np.abs(800 * lvel + 450 * angvel)
+            vright = np.abs(800 * lvel - 450 * angvel)
             print('*** Debug velocities:', vleft, vright)
-            if vleft < 0 or vright < 0:
+            if angvel < 0:
                 vleft, vright = 0, 0
         except ValueError:
             pass
