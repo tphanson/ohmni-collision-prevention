@@ -32,8 +32,8 @@ def infer(botshell, debug=False):
             vleft = np.abs(800 * lvel + 450 * angvel)
             vright = np.abs(800 * lvel - 450 * angvel)
             print('*** Debug velocities:', lvel, angvel, vleft, vright)
-            if angvel < 0:
-                vleft, vright = 0, 0
+            # if angvel < 0:
+            #     vleft, vright = 0, 0
         except ValueError:
             pass
         # Infer
@@ -64,7 +64,7 @@ def infer(botshell, debug=False):
         fps = 1/(end-start)
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
-        # time.sleep(1)
+        time.sleep(1)
 
     talker.stop()
     rosimg.stop()
