@@ -31,11 +31,11 @@ def infer(botshell, debug=False):
             lvel, angvel = float(lvel), float(angvel)
             vleft = 800 * lvel + 450 * angvel
             vright = 800 * -lvel + 450 * angvel
+            print('*** Debug velocities:', vleft, vright)
             if vleft < 0 or vright < 0:
                 vleft, vright = 0, 0
         except ValueError:
             pass
-        print('*** Debug velocities:', vleft, vright)
         # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
