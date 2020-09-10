@@ -30,6 +30,10 @@ def infer(botshell, debug=False):
             [lvel, angvel] = data.decode('utf8').split(',')
             lvel, angvel = float(lvel), float(angvel)
             vleft, vright = angvel - lvel/2, angvel + lvel/2
+
+            left = int((800.0 * lvel) + (450.0 * angvel))
+            right = int((800.0 * -lvel) + (450.0 * angvel))
+            print('*** Debug x:', left, right)
         except ValueError:
             pass
         print('*** Debug velocities:', vleft, vright)
