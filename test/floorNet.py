@@ -30,7 +30,7 @@ def infer(botshell, debug=False):
             [lvel, angvel] = data.decode('utf8').split(',')
             lvel, angvel = float(lvel), float(angvel)
             vleft = 800 * lvel + 450 * angvel
-            vright = 800 * -lvel + 450 * angvel
+            vright = 800 * lvel - 450 * angvel
             print('*** Debug velocities:', vleft, vright)
             if vleft < 0 or vright < 0:
                 vleft, vright = 0, 0
