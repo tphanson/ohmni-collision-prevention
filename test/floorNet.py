@@ -62,6 +62,6 @@ def infer(botshell, debug=False):
         fps = 1/(end-start)
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
-
+        time.sleep(0.5)
     talker.stop()
     rosimg.stop()
