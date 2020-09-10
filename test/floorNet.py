@@ -39,7 +39,7 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Detect collision
         # Add a fraction to R to prevent zero division
-        R = 225 * (vleft + vright) / (vright - vleft + 0.000001)
+        R = 225 * (vleft + vright) / (vleft - vright + 0.000001)
         print('*** Debug R:', R)
         driving_zone = odo.generate_driving_zone(R, np.pi)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
@@ -62,6 +62,6 @@ def infer(botshell, debug=False):
         fps = 1/(end-start)
         print('Total estimated time: {:.4f}'.format(end-start))
         print("FPS: {:.1f}".format(fps))
-        time.sleep(0.5)
+
     talker.stop()
     rosimg.stop()
