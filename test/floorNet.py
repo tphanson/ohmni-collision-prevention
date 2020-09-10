@@ -31,7 +31,7 @@ def infer(botshell, debug=False):
             lvel, angvel = float(lvel), float(angvel)
             vleft = np.abs(800 * lvel + 450 * angvel)
             vright = np.abs(800 * lvel - 450 * angvel)
-            print('*** Debug velocities:', vleft, vright)
+            print('*** Debug velocities:', lvel, angvel, vleft, vright)
             if angvel < 0:
                 vleft, vright = 0, 0
         except ValueError:
