@@ -42,10 +42,11 @@ def infer(botshell, debug=False):
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
         # Detect collision
-        # Add a fraction to R to prevent zero division
+        # Add a fraction to the denominator to prevent zero division
         cpstart = time.time()
         R = 225 * (vright + vleft) / (vleft - vright + 0.000001)
-        Rad = 400*np.pi/R
+        # Add a fraction to R to prevent zero division
+        Rad = 400*np.pi/(R+1)
         print('*** Debug R, Radian:', R, Rad)
         driving_zone = odo.generate_driving_zone(R, Rad)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
