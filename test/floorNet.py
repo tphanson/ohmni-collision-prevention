@@ -45,8 +45,7 @@ def infer(botshell, debug=False):
         # Add a fraction to the denominator to prevent zero division
         cpstart = time.time()
         R = 225 * (vright + vleft) / (vleft - vright + 0.000001)
-        # Add a fraction to R to prevent zero division
-        Rad = 400*np.pi/(R+1)
+        Rad = np.pi if np.abs(R) < 400 else 400*np.pi/np.abs(R)
         print('*** Debug R, Radian:', R, Rad)
         driving_zone = odo.generate_driving_zone(R, Rad)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
