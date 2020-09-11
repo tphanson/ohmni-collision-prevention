@@ -23,6 +23,7 @@ def infer(botshell, debug=False):
         _, frame = camera.read()
         print('*** Debug camera shape:', frame.shape)
         # Get velocities
+        socstart = time.time()
         botshell.sendall(b'get_velocity\n')
         vleft, vright = 0, 0
         try:
@@ -36,6 +37,8 @@ def infer(botshell, debug=False):
                 vleft, vright = 0, 0
         except ValueError:
             pass
+        socend = time.time()
+        print('Socket estimated time: {:.4f}'.format(socend-socstart))
         # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
