@@ -47,12 +47,12 @@ def infer(botshell, debug=False):
         R = 225 * (vright + vleft) / (vleft - vright + 0.000001)
         Rad = np.pi
         driving_zone = odo.generate_driving_zone(R, Rad)
-        bool_mask = image.get_mask_by_polygon(img, driving_zone)
         cpend = time.time()
-        print('Collision pred estimated time: {:.4f}'.format(cpend-cpstart))
+        bool_mask = image.get_mask_by_polygon(img, driving_zone)
         # Munis 1 for the case of R=0
         confidence = (np.sum(mask[bool_mask])-1)/np.sum(bool_mask)
         print('*** Debug confidence:', confidence)
+        print('Collision pred estimated time: {:.4f}'.format(cpend-cpstart))
         if confidence > 0.2:
             print('Stop it, idiots!', confidence)
             botshell.sendall(b'manual_move 1 -1\n')
