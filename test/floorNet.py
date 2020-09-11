@@ -46,7 +46,7 @@ def infer(botshell, debug=False):
         cpstart = time.time()
         R = np.round(225 * (vright + vleft) / (vleft - vright + 0.1))
         Rad = np.pi if np.abs(R) < 400 else 400*np.pi/np.abs(R)
-        print('*** Debug R, Radian:', R, Rad, 400*np.pi, Rad*R*np.pi)
+        print('*** Debug R, Radian:', R, Rad, 400*np.pi, R*Rad)
         driving_zone = odo.generate_driving_zone(R, Rad)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
         # Munis 1 for the case of R=0
