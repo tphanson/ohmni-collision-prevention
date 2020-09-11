@@ -44,7 +44,7 @@ def infer(botshell, debug=False):
         # Detect collision
         # Add a fraction to the denominator to prevent zero division
         cpstart = time.time()
-        R = np.round(225 * (vright + vleft) / (vleft - vright + 0.0001))
+        R = np.round(225 * (vright + vleft) / (vleft - vright + 0.1))
         Rad = np.pi if np.abs(R) < 400 else 400*np.pi/np.abs(R)
         print('*** Debug R, Radian:', R, Rad, 400*np.pi, Rad*R*np.pi)
         driving_zone = odo.generate_driving_zone(R, Rad)
