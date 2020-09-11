@@ -32,7 +32,6 @@ def infer(botshell, debug=False):
             lvel, angvel = float(lvel), float(angvel)
             vleft = np.abs(800 * lvel + 450 * angvel)
             vright = np.abs(800 * lvel - 450 * angvel)
-            print('*** Debug velocities:', lvel, angvel, vleft, vright)
             if angvel <= 0:
                 vleft, vright = 0, 0
         except ValueError:
@@ -44,11 +43,13 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Detect collision
         # Add a fraction to R to prevent zero division
+        cpstart = time.time()
         R = 225 * (vright + vleft) / (vleft - vright + 0.000001)
         Rad = np.pi
-        print('*** Debug R, Radian:', R, Rad)
         driving_zone = odo.generate_driving_zone(R, Rad)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
+        cpend = time.time()
+        print('Collision pred estimated time: {:.4f}'.format(cpend-cpstart))
         # Munis 1 for the case of R=0
         confidence = (np.sum(mask[bool_mask])-1)/np.sum(bool_mask)
         print('*** Debug confidence:', confidence)
