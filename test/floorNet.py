@@ -44,9 +44,9 @@ def infer(botshell, debug=False):
         # Detect collision
         # Add a fraction to the denominator to prevent zero division
         cpstart = time.time()
-        R = np.round(225 * (vright + vleft) / (vleft - vright + 0.001))
+        R = np.round(225 * (vright + vleft) / (vleft - vright + 0.0001))
         Rad = np.pi if np.abs(R) < 400 else 400*np.pi/np.abs(R)
-        print('*** Debug R, Radian:', R, Rad, 400*np.pi, R*Rad)
+        print('*** Debug R, Radian:', R, Rad)
         driving_zone = odo.generate_driving_zone(R, Rad)
         bool_mask = image.get_mask_by_polygon(img, driving_zone)
         # Munis 1 for the case of R=0
@@ -54,7 +54,7 @@ def infer(botshell, debug=False):
         print('*** Debug confidence:', confidence)
         cpend = time.time()
         print('Collision pred estimated time: {:.4f}'.format(cpend-cpstart))
-        if confidence > 0.2:
+        if confidence > 0.1:
             print('Stop it, idiots!', confidence)
             botshell.sendall(b'manual_move 1 -1\n')
         else:
