@@ -54,7 +54,7 @@ def infer(botshell, debug=False):
         print('*** Debug confidence:', confidence)
         cpend = time.time()
         print('Collision pred estimated time: {:.4f}'.format(cpend-cpstart))
-        if confidence > 0.05:
+        if confidence > 0.01:
             print('Stop it, idiots!', confidence)
             botshell.sendall(b'manual_move 1 -1\n')
         else:
