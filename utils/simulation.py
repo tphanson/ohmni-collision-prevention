@@ -1,7 +1,6 @@
 import time
 import random
 from threading import Thread
-import numpy as np
 
 POSSIBLE_MOVES = [(500, -500), (0, 0), (-500, 500),
                   (500, 0), (0, 500), (-500, 0), (0, -500),
@@ -25,5 +24,5 @@ def _simMovement(botshell):
 
 
 def simMovement(botshell):
-    t = Thread(target=_simMovement, args=(botshell, ))
+    t = Thread(target=_simMovement, args=(botshell, ), daemon=True)
     t.start()
