@@ -72,10 +72,10 @@ class Odometry:
         self.botshell.sendall(cmd)
 
     def avoid_obstacles(self):
-        signal = random.choice([(-0.005, -0.005), (0.005, -0.005)])
+        signal = random.choice([(-0.05, -0.05), (0.05, -0.05)])
         cmd = self._move_cmd(signal)
         counter = 0
-        while counter < 100:  # Tuen left in one second
+        while counter < 50:  # Tuen left in one second
             counter += 1
             self.botshell.sendall(cmd)
             time.sleep(0.01)
