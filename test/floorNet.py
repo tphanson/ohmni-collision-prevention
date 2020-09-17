@@ -2,7 +2,7 @@ import time
 import cv2 as cv
 import numpy as np
 
-from utils import ros, odometry, image
+from utils import ros, odometry, image, simulation
 from src.floorNet import FloorNet
 
 
@@ -14,6 +14,7 @@ def infer(botshell, debug=False):
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
     camera = cv.VideoCapture(1)
+    simulation.simMovement()
 
     # Prediction
     while True:
