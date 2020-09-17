@@ -70,7 +70,7 @@ class Odometry:
         self.botshell.sendall(cmd)
 
     def turn_right(self):
-        cmd = self._move_cmd((0.1, -0.1))
+        cmd = self._move_cmd((0.05, -0.05))
         self.botshell.sendall(cmd)
 
     def run_backward(self):
