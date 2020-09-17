@@ -47,9 +47,10 @@ def infer(botshell, debug=False):
             print('Stop it, idiots!', confidence)
             if debug:
                 counter = 0
-                while counter < 60:
+                while counter < 100: # Tuen left in one second
                     counter += 1
                     odo.turn_right()
+                    time.sleep(0.01)
             else:
                 odo.stop()
         else:
