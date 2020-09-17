@@ -7,7 +7,7 @@ import numpy as np
 def _simMovement(botshell):
     while True:
         botshell.sendall(b'manual_move 500 -500\n')
-        time.sleep(1)
+        time.sleep(0.01)
 
 
 def simMovement(botshell):
