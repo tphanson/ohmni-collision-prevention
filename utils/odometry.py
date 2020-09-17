@@ -78,7 +78,7 @@ class Odometry:
         while counter < 5:  # Tuen left in one second
             counter += 1
             self.botshell.sendall(cmd)
-            time.sleep(0.01)
+            time.sleep(0.05)
 
     def run_backward(self):
         cmd = self._move_cmd((0, -0.7))
