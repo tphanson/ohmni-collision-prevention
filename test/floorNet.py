@@ -45,9 +45,13 @@ def infer(botshell, debug=False):
         print('Collision pred estimated time: {:.4f}'.format(cpend-cpstart))
         if confidence > 0.05:
             print('Stop it, idiots!', confidence)
-            odo.turn_left()
+            if debug:
+                odo.turn_left()
+            else:
+                odo.stop()
         else:
-            odo.run_forward()
+            if debug:
+                odo.run_forward()
         # Visualize
         if debug:
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
