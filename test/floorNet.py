@@ -46,7 +46,10 @@ def infer(botshell, debug=False):
         if confidence > 0.05:
             print('Stop it, idiots!', confidence)
             if debug:
-                odo.turn_left()
+                counter = 0
+                while counter < 60:
+                    counter += 1
+                    odo.turn_right()
             else:
                 odo.stop()
         else:
