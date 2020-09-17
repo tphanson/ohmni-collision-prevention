@@ -10,7 +10,7 @@ POSSIBLE_MOVES = [(500, -500), (0, 0), (-500, 500),
 
 def _move_cmd(signal):
     (lw, rw) = signal
-    return f'manual_move {lw} {rw}\n'
+    return f'manual_move {lw} {rw}\n'.encode()
 
 
 def _simMovement(botshell):
