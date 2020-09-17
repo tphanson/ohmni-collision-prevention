@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import time
 import cv2 as cv
 
 BOT_WIDTH = 450
@@ -69,9 +70,13 @@ class Odometry:
         cmd = self._move_cmd((0, 0))
         self.botshell.sendall(cmd)
 
-    def turn_right(self):
+    def avoid_obstacles(self):
         cmd = self._move_cmd((0.05, -0.05))
-        self.botshell.sendall(cmd)
+        counter = 0
+        while counter < 50: # Tuen left in one second
+            counter += 1
+            self.botshell.sendall(cmd)
+            time.sleep(0.01)
 
     def run_backward(self):
         cmd = self._move_cmd((0, -0.7))

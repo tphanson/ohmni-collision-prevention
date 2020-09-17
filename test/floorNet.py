@@ -46,11 +46,7 @@ def infer(botshell, debug=False):
         if confidence > 0.05:
             print('Stop it, idiots!', confidence)
             if debug:
-                counter = 0
-                while counter < 50: # Tuen left in one second
-                    counter += 1
-                    odo.turn_right()
-                    time.sleep(0.01)
+                odo.avoid_obstacles()
             else:
                 odo.stop()
         else:
