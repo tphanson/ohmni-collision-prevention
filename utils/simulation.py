@@ -2,13 +2,12 @@ import time
 import random
 from threading import Thread
 
-POSSIBLE_MOVES = [(500, -500), (-500, 500), (500, 500), (-500, -500),
-                  (500, 0), (0, 500), (-500, 0), (0, -500)]
+POSSIBLE_MOVES = [(1, 1), (-1, 1), (1, 0), (-1, -0), (1, -1), (-1, -1)]
 
 
 def _move_cmd(signal):
-    (lw, rw) = signal
-    return f'manual_move {lw} {rw}\n'.encode()
+    (vleft, vfwd) = signal
+    return f'set_velocity {vleft} {vfwd}\n'.encode()
 
 
 def _simMovement(botshell):
