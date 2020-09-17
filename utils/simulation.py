@@ -3,10 +3,21 @@ import random
 from threading import Thread
 import numpy as np
 
+POSSIBLE_MOVES = [(500, -500), (0, 0), (-500, 500),
+                  (500, 0), (0, 500), (-500, 0), (0, -500),
+                  (500, 500), (-500, -500)]
+
+
+def _move_cmd(signal):
+    (lw, rw) = signal
+    return f'manual_move {lw} {rw}\n'
+
 
 def _simMovement(botshell):
     while True:
-        botshell.sendall(b'manual_move 500 -500\n')
+        random_signal = random.choice(POSSIBLE_MOVES)
+        cmd = _move_cmd(random_signal)
+        botshell.sendall(cmd)
         time.sleep(0.01)
 
 
