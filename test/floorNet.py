@@ -2,19 +2,18 @@ import time
 import cv2 as cv
 import numpy as np
 
-from utils import ros, odometry, image, simulation
+from utils import ros, odometry, image
 from src.floorNet import FloorNet
 
 
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
-    odo = odometry.Odometry(floorNet.image_shape)
+    odo = odometry.Odometry(botshell, floorNet.image_shape)
     if debug:
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
     camera = cv.VideoCapture(1)
-    simulation.simMovement(botshell)
 
     # Prediction
     while True:
@@ -25,18 +24,7 @@ def infer(botshell, debug=False):
         print('*** Debug camera shape:', frame.shape)
         # Get velocities
         socstart = time.time()
-        botshell.sendall(b'get_velocity\n')
-        vleft, vright = 0, 0
-        try:
-            data = botshell.recv(1024)
-            [lvel, angvel] = data.decode('utf8').split(',')
-            lvel, angvel = float(lvel), float(angvel)
-            vleft = np.abs(800 * lvel + 450 * angvel)
-            vright = np.abs(800 * lvel - 450 * angvel)
-            if angvel <= 0:
-                vleft, vright = 0, 0
-        except ValueError:
-            pass
+        vleft, vright = odo.get_velocity()
         socend = time.time()
         print('Socket estimated time: {:.4f}'.format(socend-socstart))
         # Infer
@@ -57,9 +45,9 @@ def infer(botshell, debug=False):
         print('Collision pred estimated time: {:.4f}'.format(cpend-cpstart))
         if confidence > 0.05:
             print('Stop it, idiots!', confidence)
-            botshell.sendall(b'manual_move 1 -1\n')
+            odo.turn_left()
         else:
-            botshell.sendall(b'manual_move 0 0\n')
+            odo.run_forward()
         # Visualize
         if debug:
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)

@@ -13,7 +13,8 @@ DISTORTION_COEFF = np.array(
 
 
 class Odometry:
-    def __init__(self, image_shape, num_of_samples=100):
+    def __init__(self, botshell, image_shape, num_of_samples=100):
+        self.botshell = botshell
         self.image_shape = image_shape
         self.num_of_samples = num_of_samples
 
@@ -44,3 +45,30 @@ class Odometry:
         inner_pts = self._distort(inner_pts, self.image_shape)
         polygon = np.append(inner_pts, np.flip(outer_pts, axis=0), axis=0)
         return polygon
+
+    def _move_cmd(self, signal):
+        (vleft, vfwd) = signal
+        return f'set_velocity {vleft} {vfwd}\n'.encode()
+
+    def get_velocity(self):
+        self.botshell.sendall(b'get_velocity\n')
+        vleft, vright = 0, 0
+        try:
+            data = self.botshell.recv(1024)
+            [lvel, angvel] = data.decode('utf8').split(',')
+            lvel, angvel = float(lvel), float(angvel)
+            vleft = np.abs(800 * lvel + 450 * angvel)
+            vright = np.abs(800 * lvel - 450 * angvel)
+            if angvel <= 0:
+                vleft, vright = 0, 0
+        except ValueError:
+            pass
+        return vleft, vright
+
+    def turn_left(self):
+        cmd = self._move_cmd((0.7, 0))
+        self.botshell.sendall(cmd)
+
+    def run_forward(self):
+        cmd = self._move_cmd((0, 0.7))
+        self.botshell.sendall(cmd)
