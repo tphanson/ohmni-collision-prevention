@@ -15,10 +15,13 @@ def _move_cmd(signal):
 
 def _simMovement(botshell):
     while True:
+        counter = 0
         random_signal = random.choice(POSSIBLE_MOVES)
         cmd = _move_cmd(random_signal)
-        botshell.sendall(cmd)
-        time.sleep(0.01)
+        while counter < 100:
+            counter += 1
+            botshell.sendall(cmd)
+            time.sleep(0.01)
 
 
 def simMovement(botshell):
