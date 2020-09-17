@@ -2,7 +2,9 @@ import time
 import random
 from threading import Thread
 
-POSSIBLE_MOVES = [(1, 1), (-1, 1), (1, 0), (-1, -0), (1, -1), (-1, -1)]
+POSSIBLE_MOVES = [(1, 1), (-1, 1), (0, 1),
+                  (1, 0), (-1, 0), (0, 0),
+                  (1, -1), (-1, -1), (0, -1)]
 
 
 def _move_cmd(signal):
