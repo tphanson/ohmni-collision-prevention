@@ -14,7 +14,7 @@ def infer(botshell, debug=False):
         rosimg = ros.ROSImage()
         talker = rosimg.gen_talker('/ocp/draw_image/compressed')
     camera = cv.VideoCapture(1)
-    simulation.simMovement()
+    simulation.simMovement(botshell)
 
     # Prediction
     while True:
