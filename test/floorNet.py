@@ -57,8 +57,10 @@ def infer(botshell, debug=False):
         # Visualize
         if debug:
             bitmap = pp.draw_bitmap(mask)
-            print(bitmap)
+            ppstart = time.time()
             trajectory = pp.dijkstra(bitmap, [6, 6], [0, 11])
+            ppend = time.time()
+            print('Path planning estimated time: {:.4f}'.format(ppend-ppstart))
             print(trajectory)
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
