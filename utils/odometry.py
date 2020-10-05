@@ -75,7 +75,7 @@ class Odometry:
         signal = random.choice([(-0.5, -0.5), (0.5, -0.5)])
         cmd = self._move_cmd(signal)
         counter = 0
-        while counter < 5:  # Tuen left in one second
+        while counter < 5:  # Turn left in one second
             counter += 1
             self.botshell.sendall(cmd)
             time.sleep(0.05)
