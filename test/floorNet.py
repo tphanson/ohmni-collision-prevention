@@ -58,7 +58,8 @@ def infer(botshell, debug=False):
         if debug:
             bitmap = pp.draw_bitmap(mask)
             print(bitmap)
-            trajectory = pp.dijkstra(bitmap)
+            trajectory = pp.dijkstra(bitmap, [6, 6], [0, 11])
+            print(trajectory)
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
