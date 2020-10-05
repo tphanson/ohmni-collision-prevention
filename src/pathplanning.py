@@ -3,7 +3,7 @@ import numpy as np
 
 
 class PathPlanning():
-    def __init(self, density=(14, 14)):
+    def __init__(self, density=(14, 14)):
         self.density = density
 
     def draw_bitmap(self, mask):
