@@ -55,7 +55,7 @@ def infer(botshell, debug=False):
                 odo.run_forward()
         # Visualize
         if debug:
-            bitmap = create_map(mask)
+            bitmap = draw_bitmap(mask)
             print(bitmap)
             trajectory = a_star(bitmap)
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
