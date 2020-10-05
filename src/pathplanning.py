@@ -12,17 +12,17 @@ class PathPlanning():
         return np.ceil(bitmap)
 
     def neighbours(self, point):
-        (y, x) = point
-        return [
-            (max(0, y-1), max(0, x-1)),
-            (max(0, y-1), x),
-            (max(0, y-1), min(13, x+1)),
-            (y, max(0, x-1)),
-            (y, min(13, x+1)),
-            (min(13, y+1), max(0, x-1)),
-            (min(13, y+1), x),
-            (min(13, y+1), min(13, x+1)),
-        ]
+        [y, x] = point
+        return np.uniques([
+            [max(0, y-1), max(0, x-1)],
+            [max(0, y-1), x],
+            [max(0, y-1), min(13, x+1)],
+            [y, max(0, x-1)],
+            [y, min(13, x+1)],
+            [min(13, y+1), max(0, x-1)],
+            [min(13, y+1), x],
+            [min(13, y+1), min(13, x+1)],
+        ])
 
     def a_star(self, bitmap):
         return None
