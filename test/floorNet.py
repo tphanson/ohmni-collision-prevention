@@ -4,7 +4,7 @@ import numpy as np
 
 from utils import ros, odometry, image
 from src.floorNet import FloorNet
-from src.pathplanning import create_map
+from src.pathplanning import draw_bitmap, a_star
 
 
 def infer(botshell, debug=False):
@@ -55,7 +55,9 @@ def infer(botshell, debug=False):
                 odo.run_forward()
         # Visualize
         if debug:
-            create_map(mask)
+            bitmap = create_map(mask)
+            print(bitmap)
+            trajectory = a_star(bitmap)
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
