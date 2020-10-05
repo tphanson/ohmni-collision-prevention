@@ -4,7 +4,7 @@ import numpy as np
 
 def draw_bitmap(mask, density=(14, 14)):
     bitmap = cv.resize(mask, density)
-    print(bitmap[6:7, 6:7])
+    bitmap[6:8, 6:8] = np.zeros((2, 2))
     return np.ceil(bitmap)
 
 
