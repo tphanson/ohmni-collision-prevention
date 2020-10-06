@@ -44,7 +44,8 @@ def infer(botshell, debug=False):
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
-            img = image.draw_trajectory(img, trajectory)
+            points = np.array(trajectory, dtype=np.int32)
+            img = image.draw_trajectory(img, points)
             talker.push(img)
 
         # Calculate frames per second (FPS)
