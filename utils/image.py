@@ -17,3 +17,9 @@ def draw_polygon(img, polygon):
     mask = get_mask_by_polygon(img, polygon)
     img[mask] = img[mask] * (1-OPACITY) + np.array(COLOR_RED) * OPACITY
     return img
+
+
+def draw_trajectory(img, trajectory):
+    mask = get_mask_by_polygon(img, trajectory)
+    img[mask] = img[mask] * (1-OPACITY) + np.array(COLOR_RED) * OPACITY
+    return img
