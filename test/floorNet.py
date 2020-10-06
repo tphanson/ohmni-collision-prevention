@@ -10,7 +10,7 @@ from src.pathplanning import PathPlanning
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
-    pp = PathPlanning((14, 14))
+    pp = PathPlanning((28, 28))
     odo = odometry.Odometry(botshell, floorNet.image_shape)
     if debug:
         rosimg = ros.ROSImage()
@@ -30,7 +30,7 @@ def infer(botshell, debug=False):
         # Path planning
         bitmap = pp.draw_bitmap(mask)
         ppstart = time.time()
-        trajectory = pp.dijkstra(bitmap, [7, 7], [11, 0])
+        trajectory = pp.dijkstra(bitmap, [14, 14], [22, 0])
         ppend = time.time()
         print('Path planning estimated time: {:.4f}'.format(ppend-ppstart))
         # Visualize
@@ -39,7 +39,7 @@ def infer(botshell, debug=False):
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             if trajectory is not None:
-                points = np.array(trajectory, dtype=np.int32)*16
+                points = np.array(trajectory, dtype=np.int32)*8
                 img = image.draw_trajectory(img, points)
             talker.push(img)
 
