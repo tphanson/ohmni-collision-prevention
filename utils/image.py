@@ -21,5 +21,5 @@ def draw_polygon(img, polygon):
 
 def draw_trajectory(img, trajectory):
     for segment in zip(trajectory[:-1].tolist(), trajectory[1:].tolist()):
-        cv.line(img, tuple(segment[0]), tuple(segment[1]), COLOR_RED, 5)
+        cv.line(img, tuple(segment[0]), tuple(segment[1]), COLOR_RED, 2)
     return img
