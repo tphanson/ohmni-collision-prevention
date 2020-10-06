@@ -39,7 +39,7 @@ class PathPlanning():
 
     def draw_bitmap(self, mask):
         bitmap = cv.resize(mask, self.density)
-        bitmap[6:8, 6:8] = np.zeros((2, 2))
+        bitmap[6:13, 6:8] = np.zeros((2, 2))
         return np.ceil(bitmap)
 
     def _distance(self, source, destination):
