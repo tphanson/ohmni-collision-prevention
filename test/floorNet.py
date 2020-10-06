@@ -6,7 +6,7 @@ from utils import ros, odometry, image
 from src.floorNet import FloorNet
 from src.pathplanning import PathPlanning
 
-DIVISION = 28  # [14, 28, 56, 112, 224]
+DIVISION = 14  # [14, 28, 56, 112, 224]
 SOURCE = [int(DIVISION/2), int(DIVISION/2)]
 DESTINATION = [int(DIVISION/2), 0]
 
@@ -33,7 +33,6 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Path planning
         bitmap = pp.draw_bitmap(mask)
-        print(bitmap)
         ppstart = time.time()
         trajectory = pp.dijkstra(bitmap, SOURCE, DESTINATION)
         ppend = time.time()
