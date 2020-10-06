@@ -39,8 +39,8 @@ class PathPlanning():
 
     def draw_bitmap(self, mask):
         bitmap = cv.resize(mask, (self.division, self.division))
-        a = int(6*224/self.division)
-        b = int(8*224/self.division)
+        a = int(6*14/self.division)
+        b = int(8*14/self.division)
         bitmap[a:, a:b] = 0
         return np.ceil(bitmap)
 
