@@ -58,6 +58,7 @@ class PathPlanning():
         # Compute distances
         while len(unvisited_nodes) > 0:
             current_node = unvisited_nodes.pop(0)
+            print(current_node)
             visited_nodes.append(current_node)
             for neighbour in self.neighbours(current_node):
                 [x, y] = neighbour
@@ -70,9 +71,6 @@ class PathPlanning():
                 if not visited and not occupied:
                     histogram[y, x] = min(
                         histogram[y, x], current_value + self._distance(current_node, neighbour))
-        print(detination)
-        print(histogram[detination[1], detination[0]])
-        print(histogram)
         # Trace the path
         if not histogram[detination[1], detination[0]] < np.inf:
             return None
