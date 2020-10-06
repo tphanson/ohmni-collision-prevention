@@ -45,7 +45,6 @@ def infer(botshell, debug=False):
             img = img * 255
             if trajectory is not None:
                 points = np.array(trajectory, dtype=np.int32)*16
-                print(points)
                 img = image.draw_trajectory(img, points)
             talker.push(img)
 
