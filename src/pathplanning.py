@@ -58,7 +58,6 @@ class PathPlanning():
         # Compute distances
         while len(unvisited_nodes) > 0:
             current_node = unvisited_nodes.pop(0)
-            print(current_node)
             visited_nodes.append(current_node)
             for neighbour in self.neighbours(current_node):
                 [x, y] = neighbour
@@ -80,7 +79,7 @@ class PathPlanning():
             min_node = None
             min_distance = np.inf
             for neighbour in self.neighbours(detination):
-                [y, x] = neighbour
+                [x, y] = neighbour
                 distance = histogram[y, x]
                 if distance < min_distance:
                     min_node = neighbour
