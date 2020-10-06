@@ -5,6 +5,7 @@ import numpy as np
 class PathPlanning():
     def __init__(self, density=(14, 14)):
         self.density = density
+        self.neighbour_map = self._gen_neighbours_map()
 
     def _gen_points(self):
         points = []
@@ -13,15 +14,7 @@ class PathPlanning():
                 points.append([y, x])
         return points
 
-    def draw_bitmap(self, mask):
-        bitmap = cv.resize(mask, self.density)
-        bitmap[6:8, 6:8] = np.zeros((2, 2))
-        return np.ceil(bitmap)
-
-    def _distance(self, source, destination):
-        return np.linalg.norm(np.array(source)-np.array(destination))
-
-    def neighbours(self, point):
+    def _gen_neighbours(self, point):
         [y, x] = point
         neighbours = np.unique([
             [max(0, y-1), max(0, x-1)],
@@ -36,6 +29,26 @@ class PathPlanning():
         neighbours = (e.tolist()
                       for e in neighbours if np.any(np.not_equal(e, point)))
         return list(neighbours)
+
+    def _gen_neighbours_map(self):
+        neighbour_map = {}
+        for [y, x] in self._gen_points():
+            key = '[{},{}]'.format(y, x)
+            neighbour_map[key] = self._gen_neighbours([y, x])
+        return neighbour_map
+
+    def draw_bitmap(self, mask):
+        bitmap = cv.resize(mask, self.density)
+        bitmap[6:8, 6:8] = np.zeros((2, 2))
+        return np.ceil(bitmap)
+
+    def _distance(self, source, destination):
+        return np.linalg.norm(np.array(source)-np.array(destination))
+
+    def neighbours(self, point):
+        [y, x] = point
+        key = '[{},{}]'.format(y, x)
+        return self.neighbour_map[key]
 
     def a_star(self, bitmap):
         return None
