@@ -6,11 +6,15 @@ from utils import ros, odometry, image
 from src.floorNet import FloorNet
 from src.pathplanning import PathPlanning
 
+DIVISION = 14  # 7*2^x
+SOURCE = [DIVISION/2, DIVISION/2]
+DESTINATION = [DIVISION/2, 0]
+
 
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
-    pp = PathPlanning((14, 14))
+    pp = PathPlanning(DIVISION)
     odo = odometry.Odometry(botshell, floorNet.image_shape)
     if debug:
         rosimg = ros.ROSImage()
@@ -29,9 +33,8 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Path planning
         bitmap = pp.draw_bitmap(mask)
-        print(bitmap)
         ppstart = time.time()
-        trajectory = pp.dijkstra(bitmap, [7, 7], [7, 0])
+        trajectory = pp.dijkstra(bitmap, SOURCE, DESTINATION)
         ppend = time.time()
         print('Path planning estimated time: {:.4f}'.format(ppend-ppstart))
         # Visualize
@@ -40,7 +43,7 @@ def infer(botshell, debug=False):
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             if trajectory is not None:
-                points = np.array(trajectory, dtype=np.int32)*16
+                points = np.array(trajectory, dtype=np.int32)*224/DIVISION
                 img = image.draw_trajectory(img, points)
             talker.push(img)
 

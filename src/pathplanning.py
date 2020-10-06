@@ -3,14 +3,14 @@ import numpy as np
 
 
 class PathPlanning():
-    def __init__(self, density=(14, 14)):
-        self.density = density
+    def __init__(self, division):
+        self.division = division
         self.neighbour_map = self._gen_neighbours_map()
 
     def _gen_points(self):
         points = []
-        for y in range(self.density[0]):
-            for x in range(self.density[1]):
+        for y in range(self.division):
+            for x in range(self.division):
                 points.append([x, y])
         return points
 
@@ -38,8 +38,8 @@ class PathPlanning():
         return neighbour_map
 
     def draw_bitmap(self, mask):
-        bitmap = cv.resize(mask, self.density)
-        bitmap[6:, 6:8] = 0
+        bitmap = cv.resize(mask, (self.division, self.division))
+        bitmap[self.division/2-1:, self.division/2-1:self.division/2+1] = 0
         return np.ceil(bitmap)
 
     def _distance(self, source, destination):
@@ -53,7 +53,7 @@ class PathPlanning():
     def dijkstra(self, bitmap, source, detination):
         visited_nodes = []
         unvisited_nodes = [source]
-        histogram = np.full(self.density, np.inf)
+        histogram = np.full((self.division, self.division), np.inf)
         histogram[source[1], source[0]] = 0.
         # Compute distances
         while len(unvisited_nodes) > 0:
