@@ -7,8 +7,8 @@ from src.floorNet import FloorNet
 from src.pathplanning import PathPlanning
 
 DIVISION = 14  # 7*2^x
-SOURCE = [DIVISION/2, DIVISION/2]
-DESTINATION = [DIVISION/2, 0]
+SOURCE = [int(DIVISION/2), int(DIVISION/2)]
+DESTINATION = [int(DIVISION/2), 0]
 
 
 def infer(botshell, debug=False):
