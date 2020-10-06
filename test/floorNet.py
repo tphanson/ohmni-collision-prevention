@@ -30,7 +30,7 @@ def infer(botshell, debug=False):
         # Path planning
         bitmap = pp.draw_bitmap(mask)
         ppstart = time.time()
-        trajectory = pp.dijkstra(bitmap, [7, 7], [11, 0])
+        trajectory = pp.dijkstra(bitmap, [7, 7], [7, 0])
         ppend = time.time()
         print('Path planning estimated time: {:.4f}'.format(ppend-ppstart))
         # Visualize
