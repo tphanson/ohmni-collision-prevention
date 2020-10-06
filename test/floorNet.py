@@ -43,7 +43,7 @@ def infer(botshell, debug=False):
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             if trajectory is not None:
-                points = np.array(trajectory, dtype=np.int32)*224/DIVISION
+                points = np.array(trajectory, dtype=np.int32)*int(224/DIVISION)
                 img = image.draw_trajectory(img, points)
             talker.push(img)
 
