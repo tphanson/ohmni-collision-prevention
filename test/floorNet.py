@@ -6,15 +6,14 @@ from utils import ros, odometry, image
 from src.floorNet import FloorNet
 from src.pathplanning import PathPlanning
 
-DIVISION = 14  # [14, 28, 56, 112, 224]
-SOURCE = [int(DIVISION/2), int(DIVISION/2)]
-DESTINATION = [int(DIVISION/2), 0]
+SOURCE = [7, 7]
+DESTINATION = [7, 0]
 
 
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
-    pp = PathPlanning(DIVISION)
+    pp = PathPlanning()
     odo = odometry.Odometry(botshell, floorNet.image_shape)
     if debug:
         rosimg = ros.ROSImage()
@@ -43,7 +42,7 @@ def infer(botshell, debug=False):
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             if trajectory is not None:
-                points = np.array(trajectory, dtype=np.int32)*int(224/DIVISION)
+                points = np.array(trajectory, dtype=np.int32)*16
                 img = image.draw_trajectory(img, points)
             talker.push(img)
 

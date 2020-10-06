@@ -2,16 +2,17 @@ import cv2 as cv
 import numpy as np
 import math
 
+DENSITY = 14
+
 
 class PathPlanning():
-    def __init__(self, division):
-        self.division = division
+    def __init__(self):
         self.neighbour_map = self._gen_neighbours_map()
 
     def _gen_points(self):
         points = []
-        for y in range(self.division):
-            for x in range(self.division):
+        for y in range(DENSITY):
+            for x in range(DENSITY):
                 points.append([x, y])
         return points
 
@@ -39,10 +40,8 @@ class PathPlanning():
         return neighbour_map
 
     def draw_bitmap(self, mask):
-        bitmap = cv.resize(mask, (self.division, self.division))
-        a = math.floor(6*self.division/14)
-        b = math.ceil(8*self.division/14)
-        bitmap[a:, a:b] = 0
+        bitmap = cv.resize(mask, (DENSITY, DENSITY))
+        bitmap[6:, 6:8] = 0
         return np.ceil(bitmap)
 
     def _distance(self, source, destination):
@@ -56,7 +55,7 @@ class PathPlanning():
     def dijkstra(self, bitmap, source, detination):
         visited_nodes = []
         unvisited_nodes = [source]
-        histogram = np.full((self.division, self.division), np.inf)
+        histogram = np.full((DENSITY, DENSITY), np.inf)
         histogram[source[1], source[0]] = 0.
         # Compute distances
         while len(unvisited_nodes) > 0:
