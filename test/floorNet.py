@@ -24,11 +24,6 @@ def infer(botshell, debug=False):
         # Get images
         _, frame = camera.read()
         print('*** Debug camera shape:', frame.shape)
-        # Get velocities
-        socstart = time.time()
-        vleft, vright = odo.get_velocity()
-        socend = time.time()
-        print('Socket estimated time: {:.4f}'.format(socend-socstart))
         # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
