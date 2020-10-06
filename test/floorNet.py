@@ -33,6 +33,7 @@ def infer(botshell, debug=False):
         img = (img*127.5+127.5)/255
         # Path planning
         bitmap = pp.draw_bitmap(mask)
+        print(bitmap)
         ppstart = time.time()
         trajectory = pp.dijkstra(bitmap, SOURCE, DESTINATION)
         ppend = time.time()
