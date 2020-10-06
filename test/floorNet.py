@@ -6,7 +6,7 @@ from utils import ros, odometry, image
 from src.floorNet import FloorNet
 from src.pathplanning import PathPlanning
 
-DIVISION = 14  # 7*2^x
+DIVISION = 28  # [14, 28, 56, 112, 224]
 SOURCE = [int(DIVISION/2), int(DIVISION/2)]
 DESTINATION = [int(DIVISION/2), 0]
 
