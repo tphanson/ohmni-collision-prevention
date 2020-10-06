@@ -70,6 +70,7 @@ class PathPlanning():
                 if not visited and not occupied:
                     histogram[y, x] = min(
                         histogram[y, x], current_value + self._distance(current_node, neighbour))
+        print(histogram)
         # Trace the path
         if not histogram[detination[1], detination[0]] < np.inf:
             return None
