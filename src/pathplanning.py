@@ -50,9 +50,6 @@ class PathPlanning():
         key = '[{},{}]'.format(y, x)
         return self.neighbour_map[key]
 
-    def a_star(self, bitmap):
-        return None
-
     def dijkstra(self, bitmap, source, detination):
         visited_nodes = []
         unvisited_nodes = [source]
@@ -74,10 +71,11 @@ class PathPlanning():
                     histogram[y, x] = min(
                         histogram[y, x], current_value + self._distance(current_node, neighbour))
         # Trace the path
+        if not histogram[detination[0], detination[1]] < np.inf:
+            return None
         trajectory = [detination]
-        existed = histogram[detination[0], detination[1]] < np.inf
         reached = False
-        while existed and not reached:
+        while not reached:
             min_node = None
             min_distance = np.inf
             for neighbour in self.neighbours(detination):
@@ -87,7 +85,7 @@ class PathPlanning():
                     min_node = neighbour
                     min_distance = distance
             detination = min_node
-            trajectory.append(min_node)
+            trajectory.append(detination)
             reached = source in trajectory
         # Return trajectory
         return trajectory
