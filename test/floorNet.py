@@ -38,13 +38,13 @@ def infer(botshell, debug=False):
         trajectory = pp.dijkstra(bitmap, [6, 6], [0, 11])
         ppend = time.time()
         print('Path planning estimated time: {:.4f}'.format(ppend-ppstart))
-        print(trajectory)
         # Visualize
         if debug:
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
             img = cv.addWeighted(mask, 0.5, img, 0.5, 0)
             img = img * 255
             points = np.array(trajectory, dtype=np.int32)*16
+            print(points)
             img = image.draw_trajectory(img, points)
             talker.push(img)
 
