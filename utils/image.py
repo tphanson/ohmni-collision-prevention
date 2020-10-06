@@ -20,6 +20,7 @@ def draw_polygon(img, polygon):
 
 
 def draw_trajectory(img, trajectory):
-    mask = get_mask_by_polygon(img, trajectory)
-    img[mask] = img[mask] * (1-OPACITY) + np.array(COLOR_RED) * OPACITY
+    for segment in zip(trajectory[:-1], trajectory[1:]):
+        print(segment)
+        cv.line(img, segment[0], segment[1], COLOR_RED, 5)
     return img
