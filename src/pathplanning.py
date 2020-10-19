@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 
-DENSITY = 10
+DENSITY = 12
 
 
 class PathPlanning():
