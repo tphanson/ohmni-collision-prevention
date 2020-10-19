@@ -1,7 +1,7 @@
 import cv2 as cv
 import numpy as np
 
-DENSITY = 14
+DENSITY = 8
 
 
 class PathPlanning():
@@ -20,12 +20,12 @@ class PathPlanning():
         neighbours = np.unique([
             [max(0, x-1), max(0, y-1)],
             [x, max(0, y-1)],
-            [min(13, x+1), max(0, y-1)],
+            [min(DENSITY-1, x+1), max(0, y-1)],
             [max(0, x-1), y],
-            [min(13, x+1), y],
-            [max(0, x-1), min(13, y+1)],
-            [x, min(13, y+1)],
-            [min(13, x+1), min(13, y+1)],
+            [min(DENSITY-1, x+1), y],
+            [max(0, x-1), min(DENSITY-1, y+1)],
+            [x, min(DENSITY-1, y+1)],
+            [min(DENSITY-1, x+1), min(DENSITY-1, y+1)],
         ], axis=0)
         neighbours = (e.tolist()
                       for e in neighbours if np.any(np.not_equal(e, point)))
@@ -40,7 +40,7 @@ class PathPlanning():
 
     def draw_bitmap(self, mask):
         bitmap = cv.resize(mask, (DENSITY, DENSITY))
-        bitmap[6:, 6:8] = 0
+        bitmap[3:, 3:5] = 0
         return np.ceil(bitmap)
 
     def _distance(self, source, destination):
