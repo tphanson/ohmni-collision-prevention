@@ -9,6 +9,7 @@ DENSITY = 16
 RAW = np.array(range(DENSITY))
 MATRIX = np.array([RAW]*DENSITY)
 
+
 def infer(botshell, debug=False):
     # Init modules
     floorNet = FloorNet()
@@ -34,7 +35,7 @@ def infer(botshell, debug=False):
         # Infer
         img, mask = floorNet.predict(frame)
         point_cloud = cv.resize(mask, (DENSITY, DENSITY))
-        print(point_cloud*MATRIX)
+        print(np.sum(point_cloud*MATRIX)/(DENSITY**2))
         img = (img*127.5+127.5)/255
         # # Detect collision
         # # Add a fraction to the denominator to prevent zero division
