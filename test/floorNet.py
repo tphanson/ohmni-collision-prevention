@@ -35,7 +35,7 @@ def infer(botshell, debug=False):
         # Infer
         img, mask = floorNet.predict(frame)
         point_cloud = cv.resize(mask, (DENSITY, DENSITY))
-        print(np.sum(point_cloud*MATRIX)/(DENSITY**2))
+        print(np.sum(point_cloud*MATRIX)/np.sum(point_cloud))
         img = (img*127.5+127.5)/255
         # # Detect collision
         # # Add a fraction to the denominator to prevent zero division
