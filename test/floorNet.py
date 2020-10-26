@@ -6,7 +6,7 @@ from utils import ros, odometry, image
 from src.floorNet import FloorNet
 
 RAW = np.array(range(16))
-MATRIX = np.array([RAW]*3)
+MATRIX = np.array([RAW]*16)
 
 print(MATRIX)
 exit(1)
