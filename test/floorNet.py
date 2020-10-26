@@ -30,6 +30,8 @@ def infer(botshell, debug=False):
         # print('Socket estimated time: {:.4f}'.format(socend-socstart))
         # Infer
         img, mask = floorNet.predict(frame)
+        point_cloud = cv.resize(mask, (16, 16))
+        print(point_cloud)
         img = (img*127.5+127.5)/255
         # # Detect collision
         # # Add a fraction to the denominator to prevent zero division
