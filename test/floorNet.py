@@ -5,6 +5,11 @@ import numpy as np
 from utils import ros, odometry, image
 from src.floorNet import FloorNet
 
+RAW = np.array(range(16))
+
+print(RAW)
+exit(1)
+
 
 def infer(botshell, debug=False):
     # Init modules
