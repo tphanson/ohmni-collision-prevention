@@ -5,12 +5,9 @@ import numpy as np
 from utils import ros, odometry, image
 from src.floorNet import FloorNet
 
-RAW = np.array(range(16))
-MATRIX = np.array([RAW]*16)
-
-print(MATRIX)
-exit(1)
-
+DENSITY = 16
+RAW = np.array(range(DENSITY))
+MATRIX = np.array([RAW]*DENSITY)
 
 def infer(botshell, debug=False):
     # Init modules
@@ -36,8 +33,8 @@ def infer(botshell, debug=False):
         # print('Socket estimated time: {:.4f}'.format(socend-socstart))
         # Infer
         img, mask = floorNet.predict(frame)
-        point_cloud = cv.resize(mask, (16, 16))
-        print(point_cloud)
+        point_cloud = cv.resize(mask, (DENSITY, DENSITY))
+        print(point_cloud*MATRIX)
         img = (img*127.5+127.5)/255
         # # Detect collision
         # # Add a fraction to the denominator to prevent zero division
