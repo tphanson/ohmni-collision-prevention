@@ -28,9 +28,9 @@ def infer(botshell, debug=False):
         # vleft, vright = odo.get_velocity()
         # socend = time.time()
         # print('Socket estimated time: {:.4f}'.format(socend-socstart))
-        # # Infer
-        # img, mask = floorNet.predict(frame)
-        # img = (img*127.5+127.5)/255
+        # Infer
+        img, mask = floorNet.predict(frame)
+        img = (img*127.5+127.5)/255
         # # Detect collision
         # # Add a fraction to the denominator to prevent zero division
         # cpstart = time.time()
@@ -53,7 +53,7 @@ def infer(botshell, debug=False):
         # else:
         #     if debug:
         #         odo.run_forward()
-        
+
         # Visualize
         if debug:
             mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
