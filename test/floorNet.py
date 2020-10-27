@@ -28,7 +28,7 @@ def infer(botshell, debug=False):
         vleft, vright = odo.get_velocity()
         socend = time.time()
         print('Socket estimated time: {:.4f}'.format(socend-socstart))
-        Infer
+        # Infer
         img, mask = floorNet.predict(frame)
         img = (img*127.5+127.5)/255
         # Detect collision
